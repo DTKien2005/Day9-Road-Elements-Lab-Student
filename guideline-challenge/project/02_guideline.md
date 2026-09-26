@@ -137,6 +137,12 @@ Khi bạn bấm phím `N` và vẽ xong 1 hình chữ nhật quanh hộp đèn, 
 4. **Cột sắt, biển báo tên đường, khung giàn ngang:** Chỉ vẽ hộp đèn, không vẽ bất kỳ thanh kim loại nào gắn kèm.
 5. **Đèn tí hon ở quá xa (< 8 pixel):** Quá nhỏ chỉ bằng 2–3 chấm điểm ảnh li ti không nhìn ra hình thù gì → BỎ QUA.
 
+![Mẫu kiểm tra âm tính: Biển báo chỉ dẫn cao tốc (0 box)](assets/guideline_images/case_bdd14_negative_sample.png)
+*Hình 6.1: Mẫu kiểm tra âm tính (Negative Sample) — Biển báo chỉ dẫn cao tốc trên giàn treo không phải đèn giao thông, giữ nguyên 0 box.*
+
+![Cảnh tuyết rơi mờ nhòe: Bỏ qua khi không có đèn hợp lệ](assets/guideline_images/case_bdd24_snowy.png)
+*Hình 6.2: Cảnh đường tuyết mờ ảo — Không đoán mò vào các mảng tuyết trắng, giữ nguyên 0 box.*
+
 ---
 
 ## 7. XỬ LÝ KHI ĐÈN BỊ CHE KHUẤT HOẶC CẮT MÉP
@@ -150,6 +156,9 @@ Khi bạn bấm phím `N` và vẽ xong 1 hình chữ nhật quanh hộp đèn, 
 3. **Đèn bị cắt ngang mép ảnh (Truncation):**
    - Đèn nằm sát rìa mép ngoài cùng của bức ảnh, bị cắt mất một phần nhưng phần còn lại vẫn nhìn thấy từ 50% trở lên.
    - *Cách làm:* Vẽ box ôm phần nhìn thấy được sát mép ảnh và tick chọn `occluded=true`.
+
+![Đèn bị che khuất một phần](assets/guideline_images/case_bdd15_occlusion.png)
+*Hình 7.1: Đèn bị che khuất một phần — Vẽ hình chữ nhật ước lượng toàn bộ khung đầu đèn (Amodal box), tick chọn occluded=true.*
 
 ---
 
@@ -185,6 +194,9 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
    - Nếu bạn thấy vừa frame trước xanh, frame ngay sau nhảy thẳng sang đỏ trong 0.1 giây là có dấu hiệu bất thường, cần tua lại kiểm tra kỹ bóng vàng ở giữa.
 4. **Bị xe tải che mất trong vài frame:** Nếu có xe tải đi qua che khuất mất cái đèn trong 2–3 frame, đừng đoán mò màu đèn khi hoàn toàn không nhìn thấy ánh sáng; hãy ẩn track hoặc đặt `state=unknown`.
 
+![Chuỗi video tiếp cận giao lộ và các đầu đèn trên giàn gantry](assets/guideline_images/case_lisa05_gantry.png)
+*Hình 9.1: Chuỗi video tiếp cận giao lộ — Giữ nguyên Track ID xuyên suốt qua các frame tiếp cận ngã tư.*
+
 ---
 
 ## 10. SỔ TAY 8 BẪY NGƯỜI MỚI THƯỜNG GẶP & CÁCH XỬ LÝ
@@ -199,6 +211,26 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
 | **6** | **Trời mưa mặt đường ướt phản chiếu** | Vệt sáng màu đỏ rực hoặc xanh in loang loáng dưới mặt đường nhựa ướt | • **BỎ QUA vệt phản chiếu dưới đất**.<br>• Chỉ vẽ duy nhất cái hộp đèn thật treo trên cột cao. |
 | **7** | **Đèn bị tắt ngóm (Mất điện / Tắt đèn)** | Ban ngày nhìn rõ cái hộp đèn nhưng cả 3 bóng đều tối om | • **VẪN PHẢI VẼ BOX** ôm khít hộp đèn.<br>• Gán `state=off`.<br>• `relevance=ego_relevant` (nếu nằm trên làn xe mình). Giúp xe tự hành biết ngã tư mất điện để giảm tốc độ. |
 | **8** | **Đèn ở ngã tư xa kích thước nhỏ** | Đèn ở xa có kích thước nhỏ từ 8 px đến 15 px, mờ nhòe | • Kích thước dưới 8 px: **BỎ QUA**.<br>• Từ 8 px đến 15 px: Vẽ box ôm đầu đèn, nếu mờ không chắc màu thì gán `state=unknown`, `relevance=unknown`, tick `needs_review=true`. |
+
+### 📸 HÌNH ẢNH MINH HỌA CÁC TÌNH HUỐNG THỰC TẾ ĐIỂN HÌNH
+
+![Đèn người đi bộ góc vỉa hè](assets/guideline_images/case_bdd11_pedestrian.png)
+*Hình 10.1: Đèn người đi bộ góc vỉa hè — Bắt buộc chọn relevance=pedestrian, tuyệt đối cấm gán ego_relevant.*
+
+![Giao lộ hoàng hôn đa luồng](assets/guideline_images/case_bdd25_dusk_intersection.png)
+*Hình 10.2: Giao lộ hoàng hôn đa luồng — Phân tách các box xanh đi thẳng (ego_relevant), đèn người đi bộ (pedestrian), và đèn ở xa (needs_review=true).*
+
+![Ban đêm: Visible Lamp Rule và bỏ qua đèn cao áp chiếu sáng](assets/guideline_images/case_bdd18_night_lamps.png)
+*Hình 10.3: Ban đêm — Áp dụng Visible Lamp Rule vẽ box nhỏ ôm quầng sáng xanh (~10x10 px, occluded=true), vẽ đèn người đi bộ đỏ và bỏ qua đèn đường cao áp vàng.*
+
+![Đêm tối ngã tư gần vs ngã tư xa](assets/guideline_images/case_bdd26_night_near_far.png)
+*Hình 10.4: Ban đêm có đèn đi thẳng và đèn người đi bộ — Phân biệt rõ đèn xe đi thẳng (ego_relevant), đèn người đi bộ (pedestrian), và các đèn nhỏ ở xa (needs_review=true).*
+
+![Trời mưa mặt đường ướt phản chiếu](assets/guideline_images/case_bdd17_rain_reflection.png)
+*Hình 10.5: Đường mưa ướt — Chỉ vẽ đầu đèn thật trên cao, tuyệt đối bỏ qua vệt sáng phản chiếu loang loáng dưới mặt đường nhựa ướt.*
+
+![Đèn ở ngã tư xa kích thước nhỏ](assets/guideline_images/case_bdd12_small_far.png)
+*Hình 10.6: Đèn ở ngã tư xa kích thước nhỏ — Phóng to 300%-400% để vẽ box khít mép đầu đèn, chọn pedestrian hoặc unknown.*
 
 ---
 

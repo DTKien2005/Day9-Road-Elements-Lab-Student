@@ -47,6 +47,15 @@
 4. ❌ **CẤM vẽ vệt phản chiếu dưới mặt đường:** Trời mưa đường ướt thấy vệt màu đỏ/xanh in loang loáng dưới đất $\rightarrow$ BỎ QUA, chỉ vẽ hộp đèn thật trên cao.
 5. ❌ **CẤM vẽ gom cụm đèn:** Trên 1 cột có 2–3 hộp đèn cạnh nhau $\rightarrow$ BẮT BUỘC vẽ các hình chữ nhật riêng biệt cho từng hộp đèn!
 
+![Quy chuẩn Bounding Box](assets/guideline_images/geom_tight_box.png)
+*Hình minh họa: Ôm sát vỏ hộp đèn tín hiệu, không vẽ cột sắt.*
+
+![Visible Lamp Rule ban đêm](assets/guideline_images/case_bdd18_night_lamps.png)
+*Hình minh họa ban đêm: Áp dụng Visible Lamp Rule và bỏ qua đèn đường cao áp vàng.*
+
+![Trời mưa bỏ qua phản chiếu](assets/guideline_images/case_bdd17_rain_reflection.png)
+*Hình minh họa trời mưa: Chỉ vẽ hộp đèn thật trên cao, bỏ qua vệt phản chiếu dưới đất.*
+
 ---
 
 ## ⌨️ 4. THAO TÁC 3 BƯỚC TRÊN CVAT
