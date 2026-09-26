@@ -53,9 +53,6 @@
 ![Visible Lamp Rule ban đêm](assets/guideline_images/case_bdd18_night_lamps.png)
 *Hình minh họa ban đêm: Áp dụng Visible Lamp Rule và bỏ qua đèn đường cao áp vàng.*
 
-![Trời mưa bỏ qua phản chiếu](assets/guideline_images/case_bdd17_rain_reflection.png)
-*Hình minh họa trời mưa: Chỉ vẽ hộp đèn thật trên cao, bỏ qua vệt phản chiếu dưới đất.*
-
 ---
 
 ## ⌨️ 4. THAO TÁC 3 BƯỚC TRÊN CVAT

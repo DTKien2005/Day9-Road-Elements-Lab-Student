@@ -223,11 +223,8 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
 ![Đêm tối ngã tư gần vs ngã tư xa](assets/guideline_images/case_bdd26_night_near_far.png)
 *Hình 10.4: Ban đêm có đèn đi thẳng và đèn người đi bộ — Phân biệt rõ đèn xe đi thẳng (ego_relevant), đèn người đi bộ (pedestrian), và các đèn nhỏ ở xa (needs_review=true).*
 
-![Trời mưa mặt đường ướt phản chiếu](assets/guideline_images/case_bdd17_rain_reflection.png)
-*Hình 10.5: Đường mưa ướt — Chỉ vẽ đầu đèn thật trên cao, tuyệt đối bỏ qua vệt sáng phản chiếu loang loáng dưới mặt đường nhựa ướt.*
-
 ![Đèn ở ngã tư xa kích thước nhỏ](assets/guideline_images/case_bdd12_small_far.png)
-*Hình 10.6: Đèn ở ngã tư xa kích thước nhỏ — Phóng to 300%-400% để vẽ box khít mép đầu đèn, chọn pedestrian hoặc unknown.*
+*Hình 10.5: Đèn ở ngã tư xa kích thước nhỏ — Phóng to 300%-400% để vẽ box khít mép đầu đèn, chọn pedestrian hoặc unknown.*
 
 ---
 
