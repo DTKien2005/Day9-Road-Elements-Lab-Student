@@ -3,8 +3,8 @@
 **Nhóm:** TrafficVision-AI — **Lead: ĐỖ TUẤN KIÊN**  
 **Version:** v3 (Bản hướng dẫn trực quan — Cầm tay chỉ việc cho người mới bắt đầu)  
 **Phạm vi áp dụng:**
-1. **Calibration Task:** [CVAT Task 26](http://localhost:8080/tasks/26) (6 ảnh: `team-traffic-light-calibration`)
-2. **Golden / Blind Task:** [CVAT Task 27](http://localhost:8080/tasks/27) (5 ảnh: `team-traffic-light-golden-blind`)
+1. **Calibration Task:** [CVAT Task 26](http://localhost:8080/tasks/26) (Task Thực hành / Hiệu chỉnh nội bộ)
+2. **Golden / Blind Task:** [CVAT Task 27](http://localhost:8080/tasks/27) (Task Thử thách Độc lập / Nghiệm thu)
 
 ---
 
@@ -37,12 +37,11 @@ Chào bạn! Nếu bạn mới bắt đầu và chưa từng gán nhãn dữ li�
 6. [Cái gì Phải Vẽ và Cái gì Tuyệt Đối Bỏ Qua](#6-cái-gì-phải-vẽ-và-cái-gì-tuyệt-đối-bỏ-qua)
 7. [Xử lý Khi Đèn Bị Che Khuất hoặc Cắt Mép](#7-xử-lý-khi-đèn-bị-che-khuất-hoặc-cắt-mép)
 8. [Cây Quyết định 5 Bước (Gặp Ảnh Lạ Cứ Làm Theo Thứ Tự)](#8-cây-quyết-định-5-bước-gặp-ảnh-lạ-cứ-làm-theo-thứ-tự)
-9. [Quy tắc Khi Làm Video Chuỗi Frame Liên Tiếp (LISA)](#9-quy-tắc-khi-làm-video-chuỗi-frame-liên-tiếp-lisa)
+9. [Quy tắc Khi Làm Video Chuỗi Frame Liên Tiếp (Tracking)](#9-quy-tắc-khi-làm-video-chuỗi-frame-liên-tiếp-tracking)
 10. [Sổ Tay 8 Bẫy Người Mới Thường Gặp & Cách Xử Lý](#10-sổ-tay-8-bẫy-người-mới-thường-gặp--cách-xử-lý)
-11. [Bảng Tra Cứu Các Mẫu Điển Hình (Có Hình Dung Thực Tế)](#11-bảng-tra-cứu-các-mẫu-điển-hình-có-hình-dung-thực-tế)
-12. [Hướng dẫn Bấm Phím Từng Bước trên Giao diện CVAT (SOP)](#12-hướng-dẫn-bấm-phím-từng-bước-trên-giao-diện-cvat-sop)
-13. [Checklist 30 Giây Tự Kiểm Tra Trước Khi Nộp Bài](#13-checklist-30-giây-tự-kiểm-tra-trước-khi-nộp-bài)
-14. [Quy chế Hỏi Đáp & Ghi Nhận Khi Gặp Khúc Mắc](#14-quy-chế-hỏi-đáp--ghi-nhận-khi-gặp-khúc-mắc)
+11. [Hướng dẫn Bấm Phím Từng Bước trên Giao diện CVAT (SOP)](#11-hướng-dẫn-bấm-phím-từng-bước-trên-giao-diện-cvat-sop)
+12. [Checklist 30 Giây Tự Kiểm Tra Trước Khi Nộp Bài](#12-checklist-30-giây-tự-kiểm-tra-trước-khi-nộp-bài)
+13. [Quy chế Hỏi Đáp & Ghi Nhận Khi Gặp Khúc Mắc](#13-quy-chế-hỏi-đáp--ghi-nhận-khi-gặp-khúc-mắc)
 
 ---
 
@@ -169,9 +168,9 @@ Khi bạn mở một bức ảnh đông đúc nhiều luồng xe cộ, hãy bìn
 
 ---
 
-## 9. QUY TẮC KHI LÀM VIDEO CHUỖI FRAME LIÊN TIẾP (LISA)
+## 9. QUY TẮC KHI LÀM VIDEO CHUỖI FRAME LIÊN TIẾP (TRACKING)
 
-Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động (như tập dữ liệu LISA):
+Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liên tiếp:
 
 1. **Cùng một cái đèn phải giữ nguyên một Track ID:** Khi dùng công cụ **Track**, từ frame đầu tiên đến frame cuối cùng, cái đèn đó phải mang cùng một số ID định danh (không được xóa đi vẽ lại tạo ID mới).
 2. **Thuộc tính `relevance` không được đổi thất thường:** Nếu frame trước cái đèn đó là `ego_relevant`, thì các frame sau khi xe tiến lại gần nó vẫn phải là `ego_relevant` (không thể tự nhiên frame sau biến thành `other_lane`).
@@ -187,31 +186,17 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động (nh�
 | # | Tình huống thực tế trên ảnh | Bạn sẽ nhìn thấy hiện tượng gì? | Cách xử lý chuẩn xác 100% |
 |:---:|:---|:---|:---|
 | **1** | **Cột có 2 hộp đèn cạnh nhau** | Cột có 1 hộp đèn tròn đỏ và 1 hộp đèn mũi tên xanh rẽ phải | • **Vẽ 2 hình chữ nhật riêng biệt** cho 2 hộp đèn.<br>• Hộp tròn đỏ: `state=red`, `relevance=ego_relevant` (xe mình đi thẳng).<br>• Hộp mũi tên xanh: `state=green`, `relevance=other_lane` (cho làn rẽ). |
-| **2** | **Đèn ban đêm không thấy vỏ hộp đen (Ảnh BDD18)** | Ban đêm trời tối thui, chỉ thấy đốm sáng xanh ngọc phát sáng lơ lửng, không thấy viền hộp đen đâu | • Áp dụng **Quy tắc bóng đèn sáng (Visible Lamp Rule)**.<br>• **Vẽ một hình chữ nhật nhỏ ôm chặt lấy cái lõi bóng đèn tròn đang sáng** (kích thước khoảng 8x8 đến 10x10 px).<br>• **Không vẽ lan ra quầng sáng chói lóa xung quanh** và không đoán mò vẽ một cái hộp to đùng.<br>• Chọn `state=green`, `relevance=ego_relevant`. |
+| **2** | **Đèn ban đêm không thấy vỏ hộp đen (Chỉ thấy đốm sáng)** | Ban đêm trời tối thui, chỉ thấy đốm sáng xanh ngọc phát sáng lơ lửng, không thấy viền hộp đen đâu | • Áp dụng **Quy tắc bóng đèn sáng (Visible Lamp Rule)**.<br>• **Vẽ một hình chữ nhật nhỏ ôm chặt lấy cái lõi bóng đèn tròn đang sáng** (kích thước khoảng 8x8 đến 10x10 px).<br>• **Không vẽ lan ra quầng sáng chói lóa xung quanh** và không đoán mò vẽ một cái hộp to đùng.<br>• Chọn `state=green` (hoặc `red`), `relevance=ego_relevant`. |
 | **3** | **Đèn đường chiếu sáng cao áp** | Đốm sáng tròn màu vàng/cam trên cột sắt uốn cong vỉa hè | • **BỎ QUA (IGNORE — Tuyệt đối không vẽ box)**.<br>• Chỉ vẽ khi nhìn thấy cấu trúc hộp đèn tín hiệu giao thông. Đèn đường đơn lẻ phải bỏ qua. |
 | **4** | **Đèn hậu ô tô màu đỏ phía trước** | Mấy đốm sáng đỏ ở tầm thấp ngang đuôi các xe hơi | • **BỎ QUA (IGNORE — Tuyệt đối không vẽ box)**.<br>• Đây là đèn đuôi xe khác, không phải đèn giao thông. |
-| **5** | **Hai ngã tư: Gần Xanh, Xa Đỏ (Ảnh BDD26)** | Ngã tư trước mặt đèn xanh, nhìn xuyên qua thấy ngã tư phía sau cách 150m đang đỏ | • **Đèn ngã tư gần:** `state=green`, `relevance=ego_relevant`.<br>• **Đèn ngã tư sau:** `state=red`, **BẮT BUỘC chọn `relevance=other_lane`**.<br>• Tuyệt đối không chọn đèn sau là ego_relevant để tránh xe phanh gấp giữa ngã tư trước! |
-| **6** | **Trời mưa đường ướt phản chiếu (Ảnh BDD17)** | Vệt sáng màu đỏ rực hoặc xanh in loang loáng dưới mặt đường nhựa ướt | • **BỎ QUA vệt phản chiếu dưới đất**.<br>• Chỉ vẽ duy nhất cái hộp đèn thật treo trên cột cao. |
+| **5** | **Hai ngã tư liên tiếp: Ngã tư gần và ngã tư xa** | Ngã tư trước mặt đèn xanh, nhìn xuyên qua thấy ngã tư phía sau cách 150m đang đỏ | • **Đèn ngã tư gần:** `state=green`, `relevance=ego_relevant`.<br>• **Đèn ngã tư sau:** `state=red`, **BẮT BUỘC chọn `relevance=other_lane`**.<br>• Tuyệt đối không chọn đèn sau là ego_relevant để tránh xe phanh gấp giữa ngã tư trước! |
+| **6** | **Trời mưa mặt đường ướt phản chiếu** | Vệt sáng màu đỏ rực hoặc xanh in loang loáng dưới mặt đường nhựa ướt | • **BỎ QUA vệt phản chiếu dưới đất**.<br>• Chỉ vẽ duy nhất cái hộp đèn thật treo trên cột cao. |
 | **7** | **Đèn bị tắt ngóm (Mất điện / Tắt đèn)** | Ban ngày nhìn rõ cái hộp đèn nhưng cả 3 bóng đều tối om | • **VẪN PHẢI VẼ BOX** ôm khít hộp đèn.<br>• Gán `state=off`.<br>• `relevance=ego_relevant` (nếu nằm trên làn xe mình). Giúp xe tự hành biết ngã tư mất điện để giảm tốc độ. |
 | **8** | **Đèn ở ngã tư xa kích thước nhỏ** | Đèn ở xa có kích thước nhỏ từ 8 px đến 15 px, mờ nhòe | • Kích thước dưới 8 px: **BỎ QUA**.<br>• Từ 8 px đến 15 px: Vẽ box ôm đầu đèn, nếu mờ không chắc màu thì gán `state=unknown`, `relevance=unknown`, tick `needs_review=true`. |
 
 ---
 
-## 11. BẢNG TRA CỨU CÁC MẪU ĐIỂN HÌNH (CÓ HÌNH DUNG THỰC TẾ)
-
-| Tên ảnh (`sample_id`) | Đặc điểm cảnh quan bạn sẽ thấy | Kết quả gán nhãn chuẩn xác |
-|:---|:---|:---|
-| `BDD02` | Đường phố ban ngày, đèn treo ngay giữa làn đi thẳng | 1 box khít đầu đèn: `state=green`, `relevance=ego_relevant`, `occluded=false`. |
-| `BDD04` | Cành cây xanh che mất nửa thân hộp đèn bên phải | 1 box ước lượng toàn bộ hộp đèn: `state=red`, `relevance=ego_relevant`, `occluded=true`. |
-| `BDD10` | Cột có 2 hộp đèn: 1 đèn tròn đỏ, 1 mũi tên xanh rẽ phải | Vẽ 2 box riêng: Box tròn (`red`, `ego_relevant`), Box mũi tên rẽ (`green`, `other_lane`). |
-| `LISA01` | Xe đang chạy tiếp cận giao lộ, frame đầu tiên của video | Tạo Track `traffic_light`: `state=green`, `relevance=ego_relevant`. |
-| `BDD14` | Đường cao tốc ngoại ô, chỉ có biển báo chỉ dẫn màu xanh lá lớn bắc ngang | **KHÔNG VẼ GÌ CẢ** (Negative sample — biển báo cao tốc không phải đèn giao thông). |
-| `BDD18` | Phố đêm đen đặc: 2 đốm sáng xanh ngọc trên cao | Vẽ 2 box nhỏ ôm vừa khít lõi bóng xanh: `state=green`, `relevance=ego_relevant`. Bỏ qua các đốm đỏ ở đuôi xe ô tô tầm thấp! |
-| `BDD26` | Đêm sáng: Đèn ngã tư gần màu xanh, đèn ngã tư xa tít đằng sau màu đỏ | Đèn gần: `green`, `ego_relevant`. Đèn xa: `red`, `other_lane` (Bắt buộc!). |
-
----
-
-## 12. HƯỚNG DẪN BẤM PHÍM TỪNG BƯỚC TRÊN GIAO DIỆN CVAT (SOP)
+## 11. HƯỚNG DẪN BẤM PHÍM TỪNG BƯỚC TRÊN GIAO DIỆN CVAT (SOP)
 
 Nếu đây là lần đầu tiên bạn ngồi vào máy tính mở CVAT:
 
@@ -236,7 +221,7 @@ Nếu đây là lần đầu tiên bạn ngồi vào máy tính mở CVAT:
 
 ---
 
-## 13. CHECKLIST 30 GIÂY TỰ KIỂM TRA TRƯỚC KHI NỘP BÀI
+## 12. CHECKLIST 30 GIÂY TỰ KIỂM TRA TRƯỚC KHI NỘP BÀI
 
 Trước khi báo cáo với Lead là bạn đã gán nhãn xong, hãy dành đúng 30 giây tự hỏi mình 4 câu hỏi này:
 
@@ -247,7 +232,7 @@ Trước khi báo cáo với Lead là bạn đã gán nhãn xong, hãy dành đ�
 
 ---
 
-## 14. QUY CHẾ HỎI ĐÁP & GHI NHẬN KHI GẶP KHÚC MẮC
+## 13. QUY CHẾ HỎI ĐÁP & GHI NHẬN KHI GẶP KHÚC MẮC
 
 1. **Khi bạn gặp một bức ảnh quá khó:**
    - Đừng tự ý đoán mò rồi vẽ bừa.
