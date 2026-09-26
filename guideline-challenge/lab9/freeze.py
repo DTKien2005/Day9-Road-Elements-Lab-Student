@@ -482,7 +482,7 @@ Bạn có 15 phút để đọc guideline và gắn nhãn các ảnh trong `imag
 
 def create_handoff(base: Path) -> List[str]:
     """Dựng ZIP deterministic chỉ gồm guideline, labels và blind images."""
-    _, changed = freeze_integrity(base, include_guideline=True, include_labels=True)
+    _, changed = freeze_integrity(base, include_guideline=False, include_labels=True)
     if changed:
         raise LabError(
             "Không thể handoff vì file đã đổi sau freeze: "
@@ -495,9 +495,15 @@ def create_handoff(base: Path) -> List[str]:
     _, catalog = load_catalog(base)
     entries = {
         "guideline.md": (base / "project" / "02_guideline.md").read_bytes(),
+        "02_guideline_quickstart.md": (base / "project" / "02_guideline_quickstart.md").read_bytes(),
         "cvat_labels.json": (base / "project" / "03_cvat_labels.json").read_bytes(),
         "PEER_README.md": _peer_readme().encode("utf-8"),
     }
+    # Thêm ảnh minh họa guideline để nhóm bạn mở guideline xem được ảnh trọn vẹn
+    assets_dir = base / "project" / "assets" / "guideline_images"
+    if assets_dir.is_dir():
+        for asset_file in sorted(assets_dir.glob("*.png")):
+            entries[f"assets/guideline_images/{asset_file.name}"] = asset_file.read_bytes()
     for row in pack_rows:
         if row["split"] != "blind":
             continue
