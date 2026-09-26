@@ -2,7 +2,17 @@
 
 Dự án gán nhãn chuẩn công nghiệp: **Traffic Light State & Ego Relevance** (Nhận diện trạng thái và độ liên quan của đèn giao thông cho xe tự hành tại giao lộ nhiều đầu đèn và điều kiện ánh sáng phức tạp).
 
-**Lead & Spec Owner:** **ĐỖ TRUNG KIÊN** (GitHub: `DTKien2005`) — Nhóm: **TrafficVision-AI**
+**Nhóm thực hiện:** **TrafficVision-AI**
+
+### 👥 Danh sách thành viên nhóm:
+
+| Tên | MSV | Vị trí |
+| :--- | :---: | :---: |
+| **Đỗ Trung Kiên** | 2A202602283 | **Lead** |
+| Nguyễn Xuân Quang | 2A202602311 | Thành viên |
+| Ngô Minh Tuấn | 2A202602287 | Thành viên |
+| Trần Đức Thọ | 2A202602324 | Thành viên |
+| Lã Việt Quang | 2A202602267 | Thành viên |
 
 ### 📖 Tài liệu Hướng dẫn Gán nhãn (Guideline Specs):
 - 📘 **[GUIDELINE.md](GUIDELINE.md)**: **Bản Đầy Đủ (Full Specification — 13 Mục Chi Tiết)**
