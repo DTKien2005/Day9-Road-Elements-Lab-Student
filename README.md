@@ -2,7 +2,13 @@
 
 Dự án gán nhãn chuẩn công nghiệp: **Traffic Light State & Ego Relevance** (Nhận diện trạng thái và độ liên quan của đèn giao thông cho xe tự hành tại giao lộ nhiều đầu đèn và điều kiện ánh sáng phức tạp).
 
-Toàn bộ nội dung bài lab nằm trong thư mục [guideline-challenge/](guideline-challenge/).
+**Lead & Spec Owner:** **ĐỖ TRUNG KIÊN** (GitHub: `DTKien2005`) — Nhóm: **TrafficVision-AI**
+
+### 📖 Tài liệu Hướng dẫn Gán nhãn (Guideline Specs):
+- 📘 **[GUIDELINE.md](GUIDELINE.md)**: **Bản Đầy Đủ (Full Specification — 13 Mục Chi Tiết)**
+- ⚡ **[GUIDELINE_QUICKSTART.md](GUIDELINE_QUICKSTART.md)**: **Bản Rút Gọn / Cheatsheet 1 Trang (Dành Cho Người Cần Thao Tác Nhanh)**
+
+Toàn bộ hồ sơ dự án nằm trong thư mục [guideline-challenge/](guideline-challenge/).
 
 ---
 
