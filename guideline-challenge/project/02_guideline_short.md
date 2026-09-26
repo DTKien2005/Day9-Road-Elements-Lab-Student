@@ -35,7 +35,7 @@
 | **Ban ngày nhìn rõ hộp đèn nhưng tối om (mất điện/tắt)** | • `state`: **`off`** |
 | **Đèn ở ngã tư xa mờ tịt, sương mù, không rõ màu** | • `state`: **`unknown`**, `relevance`: `other_lane` hoặc `unknown`<br>• **Tick chọn `needs_review=true`** |
 | **Đèn bị cành cây/thùng xe tải che mất hơn 50% thân đèn** | • Vẽ box ước lượng cả hộp đèn<br>• **Tick chọn `occluded=true`** |
-| **Ban đêm nền trời tối thui, chỉ thấy đốm xanh ngọc lơ lửng** | • Vẽ box nhỏ ôm khít đốm sáng tròn phát sáng (8x8 đến 10x10 px)<br>• `state`: `green` (hoặc `red`), `relevance`: `ego_relevant` |
+| **Ban đêm nền trời tối thui, chỉ thấy đốm xanh ngọc lơ lửng** | • Vẽ box nhỏ ôm khít đốm sáng tròn phát sáng (8x8 đến 10x10 px)<br>• `state`: `green` (hoặc `red`), `relevance`: `ego_relevant`, tick `occluded=true`<br>• Nếu thấy đèn người đi bộ đỏ trên vỉa hè → gán `relevance=pedestrian` |
 
 ---
 
