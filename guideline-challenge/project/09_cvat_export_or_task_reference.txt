@@ -1,8 +1,8 @@
 CVAT task reference
 
 CVAT version: v2.74.1
-Task calibration (tên, id): team-traffic-light-calib-v1 (Task #1)
-Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: team-traffic-light-final-v3 (Task #2)
+Task calibration (tên, id): team-traffic-light-calibration (Task #26)
+Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: team-traffic-light-golden-blind (Task #27)
 File export đã nộp (đường dẫn trong repo): project/07_blind_handoff/peer_output/peer.xml
 Guideline version dán trong Guide của task: v3
 Ghi chú cho người tiếp nhận: Schema sử dụng 1 Class traffic_light (rectangle) với 4 attributes: state, relevance, occluded, needs_review; và 1 tag image_escalate. Toàn bộ edge case đa đầu đèn và ngã tư liên tiếp đã được quy chuẩn hóa.

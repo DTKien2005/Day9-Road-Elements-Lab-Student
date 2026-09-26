@@ -1,28 +1,59 @@
-# Day 9 Lab — Road Elements
+# Day 9 Lab — Road Elements Guideline Design Challenge
 
-Repo mẫu này chứa **hai bài lab Day 9 độc lập**. Đầu buổi Lab Coach báo lớp làm bài nào; bạn chỉ làm bài đó và để
-nguyên thư mục bài kia.
+Dự án gán nhãn chuẩn công nghiệp: **Traffic Light State & Ego Relevance** (Nhận diện trạng thái và độ liên quan của đèn giao thông cho xe tự hành tại giao lộ nhiều đầu đèn và điều kiện ánh sáng phức tạp).
 
-| Thư mục | Bài | Tạo repo | Đọc tiếp |
-|---|---|---|---|
-| `mini-task/` | Gắn nhãn 4 mini-task (lane, drivable area, traffic sign, traffic light) trên CVAT, khoá bài, tự đối chiếu reference và ghi log | Mỗi người một repo | [mini-task/README.md](mini-task/README.md) |
-| `guideline-challenge/` | Guideline Design Challenge: nhóm thiết kế guideline + task CVAT, freeze gold, nhóm peer label blind rồi chấm | Một repo cho cả nhóm | [guideline-challenge/README.md](guideline-challenge/README.md) |
+Toàn bộ nội dung bài lab nằm trong thư mục [guideline-challenge/](guideline-challenge/).
 
-## Bắt đầu
+---
 
-1. Tạo repo bài làm bằng **Use this template → Create a new repository** theo cột "Tạo repo" của bài được giao, rồi
-   clone về một thư mục **không có dấu tiếng Việt và khoảng trắng** trong đường dẫn.
-2. Vào thư mục của bài rồi chạy `make help`:
+## 1. Trạng thái dự án (6/6 Gates Passed)
 
-   ```bash
-   cd mini-task            # hoặc: cd guideline-challenge
-   make help
-   ```
+| Gate | Tên Gate | Trạng thái | Bằng chứng nghiệm thu |
+| :---: | :--- | :---: | :--- |
+| **G1** | **Topic Lock** | ✓ ĐẠT | [00_team.md](guideline-challenge/project/00_team.md), [01_problem_statement.md](guideline-challenge/project/01_problem_statement.md) |
+| **G2** | **CVAT Ready** | ✓ ĐẠT | [02_guideline.md](guideline-challenge/project/02_guideline.md) (v1), [03_cvat_labels.json](guideline-challenge/project/03_cvat_labels.json), [sample_pack.csv](guideline-challenge/project/sample_pack.csv) |
+| **G3** | **Calibration Done** | ✓ ĐẠT | [06_calibration_report.csv](guideline-challenge/project/06_calibration_report.csv), [08_revision_log.md](guideline-challenge/project/08_revision_log.md) (v2) |
+| **G4** | **Gold Frozen** | ✓ ĐẠT | [gold_decisions.csv](guideline-challenge/project/04_edge_cases/gold_decisions.csv), [edge_case_cards.md](guideline-challenge/project/04_edge_cases/edge_case_cards.md), `FREEZE.txt` (tag `gold-freeze`) |
+| **G5** | **Handoff Complete** | ✓ ĐẠT | [transfer_score.csv](guideline-challenge/project/07_blind_handoff/transfer_score.csv), [clarification_log.csv](guideline-challenge/project/07_blind_handoff/clarification_log.csv), [peer_feedback.md](guideline-challenge/project/07_blind_handoff/peer_feedback.md) |
+| **G6** | **Final Handoff** | ✓ ĐẠT | [02_guideline.md](guideline-challenge/project/02_guideline.md) (v3), [09_cvat_export_or_task_reference.txt](guideline-challenge/project/09_cvat_export_or_task_reference.txt) |
 
-   Không có `make` (thường gặp trên Windows) thì chạy `python lab9.py --help` (máy chỉ có `python3` hoặc `py`: gõ
-   `python3 lab9.py --help` / `py lab9.py --help`). Mọi lệnh `make …` và `python lab9.py …` của bài đều chạy
-   **trong thư mục bài**, không chạy ở gốc repo.
-3. Làm tiếp theo README của bài. Mọi file bạn tạo và nộp đều nằm trong thư mục bài đó.
+- **Điểm chuyển giao GTS:** **97.0 / 100** (Decision accuracy 100%, Critical 100%, Geometry 100%, Independence 70%).
 
-Hai bài không dùng chung file nào. Nguồn và giấy phép dữ liệu ảnh: [ATTRIBUTION.txt](ATTRIBUTION.txt) — giữ nguyên
-file này ở gốc repo và trong từng thư mục bài.
+---
+
+## 2. Các Task trên CVAT Local
+
+Hai task đã được tạo sẵn trên CVAT cục bộ (`http://localhost:8080`) với đầy đủ label, thuộc tính và tích hợp guideline:
+
+1. **Task Calibration (6 ảnh):**
+   - **Tên task:** `team-traffic-light-calibration` (Task #26)
+   - **Link mở Job:** [http://localhost:8080/tasks/26/jobs/20](http://localhost:8080/tasks/26/jobs/20)
+   - **Mục đích:** 6 ảnh `BDD11`, `BDD12`, `BDD13`, `BDD15`, `BDD17`, `LISA05` để đo lường bất đồng kiểm chuẩn nội bộ.
+
+2. **Task Golden / Blind Set (5 ảnh):**
+   - **Tên task:** `team-traffic-light-golden-blind` (Task #27)
+   - **Link mở Job:** [http://localhost:8080/tasks/27/jobs/21](http://localhost:8080/tasks/27/jobs/21)
+   - **Mục đích:** 5 ảnh `BDD14`, `BDD18`, `BDD24`, `BDD25`, `BDD26` làm đáp án chuẩn Golden Reference của nhóm.
+
+---
+
+## 3. Lệnh kiểm tra trong buổi
+
+Di chuyển vào thư mục bài làm:
+```bash
+cd guideline-challenge
+```
+
+Trên Windows PowerShell:
+```powershell
+# Kiểm tra trạng thái 6 gate
+$env:PYTHONUTF8="1"; python lab9.py status
+
+# Xác thực tính toàn vẹn của mã khóa freeze
+$env:PYTHONUTF8="1"; python lab9.py verify
+
+# Kiểm tra tổng thể trước khi nộp
+$env:PYTHONUTF8="1"; python lab9.py check
+```
+
+Nguồn và giấy phép dữ liệu ảnh: [ATTRIBUTION.txt](ATTRIBUTION.txt).

@@ -15,7 +15,7 @@ Gán nhãn phát hiện vị trí (bounding box), trạng thái tín hiệu (`st
    - **Attributes**:
      - `state`: Trạng thái màu đang sáng (`red`, `yellow`, `green`, `off`, `unknown`).
      - `relevance`: Quyền điều khiển đối với làn đường của xe (`ego_relevant`, `other_lane`, `pedestrian`, `unknown`).
-     - `occluded`: Cờ nhị phân (`true`/`false`) khi đầu đèn bị che khuất $\ge 50\%$.
+     - `occluded`: Cờ nhị phân (`true`/`false`) khi đầu đèn bị che khuất từ 50% diện tích trở lên.
      - `needs_review`: Cờ đánh dấu nghi vấn (`true`/`false`) cho QA reviewer.
    - **Tag ảnh**: `image_escalate` cho các khung hình bất khả kháng (chói lóa toàn cảnh, hỏng dữ liệu).
 
@@ -24,7 +24,7 @@ Gán nhãn phát hiện vị trí (bounding box), trạng thái tín hiệu (`st
    - **Phanh khẩn cấp vô lý (Phantom Braking)**: Nhầm đèn đỏ của giao lộ phía sau (far intersection) hoặc đèn đỏ của làn rẽ (`other_lane`) thành đèn đỏ điều khiển ego lane (`ego_relevant`), khiến xe phanh gấp nguy hiểm giữa dòng giao thông đang chạy tốc độ cao.
 
 4. **Khi ambiguity không resolve được, ai / ở đâu là escalation path?**
-   Khi không đủ bằng chứng hình học hoặc ngữ cảnh thời gian (đèn mờ nhòe $< 8\text{ px}$, lóa đèn xe ban đêm, góc giao lộ không rõ ràng):
+   Khi không đủ bằng chứng hình học hoặc ngữ cảnh thời gian (đèn mờ nhòe < 8 px, lóa đèn xe ban đêm, góc giao lộ không rõ ràng):
    - Đặt `state=unknown` và `relevance=unknown`.
    - Đánh dấu checkbox `needs_review=true`.
    - Nếu toàn bộ ảnh bị mù sáng/cháy sáng không thể đọc được cảnh: gán tag `image_escalate`.
@@ -33,16 +33,16 @@ Gán nhãn phát hiện vị trí (bounding box), trạng thái tín hiệu (`st
 ## Scope
 
 - **Trong scope (bắt buộc label):**
-  - Mọi đầu đèn tín hiệu giao thông đường bộ nhìn thấy được (chiều dài cạnh lớn nhất $\ge 8\text{ px}$), bao gồm đèn tròn thông thường, đèn mũi tên, đèn kiểm soát làn, đèn người đi bộ và đèn đang tắt (`off`).
+  - Mọi đầu đèn tín hiệu giao thông đường bộ nhìn thấy được (chiều dài cạnh lớn nhất >= 8 px), bao gồm đèn tròn thông thường, đèn mũi tên, đèn kiểm soát làn, đèn người đi bộ và đèn đang tắt (`off`).
   - Giao lộ gần (near/foreground intersection) và giao lộ kế tiếp nhìn thấy được trong tầm nhìn (far/background intersection).
 - **Ngoài scope (ignore - tuyệt đối không vẽ box):**
   - Đèn chiếu sáng đô thị (đèn đường đơn lẻ không có hộp đèn giao thông), đèn hậu xe hơi (tail lights), đèn phanh, đèn biển quảng cáo/neon.
   - Hình phản chiếu của đèn giao thông trên mặt đường ướt, vũng nước hoặc kính xe buýt/tòa nhà.
   - Cột trụ (pole), khung giàn treo (gantry), biển tên đường hoặc camera giám sát gắn kèm.
-  - Đèn tín hiệu quá nhỏ mờ ($< 8\text{ px}$) không còn nhận ra cấu trúc cụm đèn.
+  - Đèn tín hiệu quá nhỏ mờ (< 8 px) không còn nhận ra cấu trúc cụm đèn.
 - **Geometry tolerance:**
   - Box phải ôm chặt phần vỏ hộp đèn (`signal head`), không lấy mào che nắng quá rộng hay thanh đỡ.
-  - Sai số cho phép: $\le 3\text{ px}$ mỗi cạnh trên ảnh chuẩn $1280 \times 720$.
+  - Sai số cho phép: <= 3 px mỗi cạnh trên ảnh chuẩn 1280 x 720.
 
 ## Output chấm được
 

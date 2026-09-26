@@ -27,7 +27,7 @@ chứng thì guideline có escalation path không?
    vào **Settings → Collaborators** thêm các thành viên còn lại. Mọi người clone repo đó về một thư mục **không có dấu
    tiếng Việt và khoảng trắng** trong đường dẫn.
 2. Mở terminal trong thư mục `guideline-challenge/` của repo (`cd guideline-challenge`), chạy `make help`. Bài này
-   chỉ dùng thư mục `guideline-challenge/`; thư mục `mini-task/` là bài khác, để nguyên. Không có `make` (thường gặp trên Windows) thì dùng lệnh
+   tập trung trọn vẹn vào thư mục `guideline-challenge/`. Không có `make` (thường gặp trên Windows) thì dùng lệnh
    `python lab9.py …` ở cột phải bảng lệnh — hai cách cho cùng kết quả. Tool chỉ cần Python 3, không cài thêm gì.
 3. **Mỗi người** bật CVAT **đã cài từ Day 2** trên máy mình — không cài lại. Mở Docker Desktop, vào thư mục CVAT
    (`cvat-day2`, hoặc `cvat` nếu đã cài bản mới ở Day 8), chạy `docker compose start`, quay về thư mục

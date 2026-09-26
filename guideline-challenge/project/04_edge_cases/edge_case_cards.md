@@ -59,7 +59,7 @@ Observation: Ở ngã tư xa xuất hiện một đầu đèn kích thước kho
 Decision: LABEL
 Expected: Bounding box ôm khít đầu đèn, state=unknown, relevance=ego_relevant (hoặc unknown), needs_review=true.
 Rationale: Giữ recall cho detector nhưng không ép annotator đoán mò trạng thái màu khi không đủ bằng chứng điểm ảnh.
-Common mistake: Đoán mò màu theo cảm tính hoặc bỏ qua không vẽ box dù kích thước $\ge 8\text{ px}$.
+Common mistake: Đoán mò màu theo cảm tính hoặc bỏ qua không vẽ box dù kích thước >= 8 px.
 Diversity: small_far
 
 ---
