@@ -86,6 +86,9 @@ Chào bạn! Nếu bạn mới bắt đầu và chưa từng gán nhãn dữ li�
         (Vẽ riêng)          (Vẽ riêng)
 ```
 
+![Quy tắc Một đầu đèn = Một hộp riêng biệt](assets/guideline_images/geom_single_head.png)
+*Hình 3.1: Quy tắc phân tách đầu đèn — Mỗi đầu đèn vật lý độc lập phải có một bounding box riêng, tuyệt đối không gom cụm các đầu đèn lại làm một.*
+
 ---
 
 ## 4. CÁCH VẼ BOUNDING BOX KHÍT VÀ ĐẸP (QUY CHUẨN HÌNH HỌC)
@@ -98,6 +101,9 @@ Chào bạn! Nếu bạn mới bắt đầu và chưa từng gán nhãn dữ li�
 3. **CẤM VẼ CẢ CỘT SẮT:**
    - Dừng mép hình chữ nhật ngay chỗ hộp đèn tiếp giáp với thanh đỡ kim loại. Tuyệt đối không kéo dài box để bao trùm cái cột trụ hay thanh xà ngang.
 4. **Dung sai sai số cho phép:** Lệch tối đa 3 pixel mỗi cạnh. Lệch trên 5 pixel hoặc vẽ dính cột đèn sẽ bị coi là lỗi nặng.
+
+![Quy chuẩn Bounding Box ôm khít vỏ hộp](assets/guideline_images/geom_tight_box.png)
+*Hình 4.1: Quy chuẩn hình học Bounding Box — Ôm sát 4 mép ngoài vỏ hộp đèn, dừng lại ở thanh giàn sắt, không bao trùm cột kim loại.*
 
 ---
 
@@ -189,7 +195,7 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
 | **2** | **Đèn ban đêm không thấy vỏ hộp đen (Chỉ thấy đốm sáng)** | Ban đêm trời tối thui, chỉ thấy đốm sáng xanh ngọc phát sáng lơ lửng, không thấy viền hộp đen đâu | • Áp dụng **Quy tắc bóng đèn sáng (Visible Lamp Rule)**.<br>• **Vẽ một hình chữ nhật nhỏ ôm chặt lấy cái lõi bóng đèn tròn đang sáng** (kích thước khoảng 8x8 đến 10x10 px).<br>• **Không vẽ lan ra quầng sáng chói lóa xung quanh** và không đoán mò vẽ một cái hộp to đùng.<br>• Chọn `state=green` (hoặc `red`), `relevance=ego_relevant`, tick `occluded=true` (do vỏ hộp bị chìm trong bóng tối ban đêm).<br>• Nếu phát hiện đầu đèn người đi bộ trên vỉa hè (như bóng đỏ người đi bộ), vẽ box riêng và chọn `relevance=pedestrian`, `occluded=false`. |
 | **3** | **Đèn đường chiếu sáng cao áp** | Đốm sáng tròn màu vàng/cam trên cột sắt uốn cong vỉa hè | • **BỎ QUA (IGNORE — Tuyệt đối không vẽ box)**.<br>• Chỉ vẽ khi nhìn thấy cấu trúc hộp đèn tín hiệu giao thông. Đèn đường đơn lẻ phải bỏ qua. |
 | **4** | **Đèn hậu ô tô màu đỏ phía trước** | Mấy đốm sáng đỏ ở tầm thấp ngang đuôi các xe hơi | • **BỎ QUA (IGNORE — Tuyệt đối không vẽ box)**.<br>• Đây là đèn đuôi xe khác, không phải đèn giao thông. |
-| **5** | **Hai ngã tư liên tiếp: Ngã tư gần và ngã tư xa** | Ngã tư trước mặt đèn xanh, nhìn xuyên qua thấy ngã tư phía sau cách 150m đang đỏ | • **Đèn ngã tư gần:** `state=green`, `relevance=ego_relevant`.<br>• **Đèn ngã tư sau:** `state=red`, **BẮT BUỘC chọn `relevance=other_lane`**.<br>• Tuyệt đối không chọn đèn sau là ego_relevant để tránh xe phanh gấp giữa ngã tư trước! |
+| **5** | **Ngã tư ban đêm & Hai ngã tư liên tiếp (Gần vs Xa)** | Ngã tư gần có đèn đi thẳng xanh và đèn người đi bộ đỏ; phía xa dọc tuyến đường có thêm các đầu đèn nhỏ mờ | • **Đèn ngã tư gần:** Box đi thẳng: `state=green`, `relevance=ego_relevant`; Box người đi bộ: `state=red`, `relevance=pedestrian`.<br>• **Các đầu đèn nhỏ ở ngã tư xa:** Vẽ box ôm đầu đèn, chọn màu quan sát được (`red`/`green`), và **BẮT BUỘC tick `needs_review=true`**.<br>• *Lưu ý sống còn:* Không bao giờ để đèn đỏ ngã tư xa làm xe phanh gấp khi ngã tư trước đang xanh! |
 | **6** | **Trời mưa mặt đường ướt phản chiếu** | Vệt sáng màu đỏ rực hoặc xanh in loang loáng dưới mặt đường nhựa ướt | • **BỎ QUA vệt phản chiếu dưới đất**.<br>• Chỉ vẽ duy nhất cái hộp đèn thật treo trên cột cao. |
 | **7** | **Đèn bị tắt ngóm (Mất điện / Tắt đèn)** | Ban ngày nhìn rõ cái hộp đèn nhưng cả 3 bóng đều tối om | • **VẪN PHẢI VẼ BOX** ôm khít hộp đèn.<br>• Gán `state=off`.<br>• `relevance=ego_relevant` (nếu nằm trên làn xe mình). Giúp xe tự hành biết ngã tư mất điện để giảm tốc độ. |
 | **8** | **Đèn ở ngã tư xa kích thước nhỏ** | Đèn ở xa có kích thước nhỏ từ 8 px đến 15 px, mờ nhòe | • Kích thước dưới 8 px: **BỎ QUA**.<br>• Từ 8 px đến 15 px: Vẽ box ôm đầu đèn, nếu mờ không chắc màu thì gán `state=unknown`, `relevance=unknown`, tick `needs_review=true`. |
