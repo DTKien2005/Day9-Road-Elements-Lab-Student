@@ -1,1 +1,12 @@
 sample_id,decision_id,expected,severity,rationale
+BDD14,D01,IGNORE,major,Negative sample: highway gantry contains overhead road signs but no traffic lights - must ignore
+BDD14,D02,geometry:no_box,minor,Ensure no bounding box is drawn on highway signs or street lamps
+BDD18,D03,IGNORE,major,Night city street: high pressure sodium street lamps on curved poles must be ignored (no box)
+BDD18,D04,traffic_light state=red relevance=ego_relevant,critical,Night city street: main intersection traffic light is red for ego lane - mislabeling green causes fatal crash
+BDD18,D05,geometry:tight_head_box,minor,Bounding box must be tight around the physical signal head without enclosing the pole or halo glare
+BDD24,D06,traffic_light state=unknown relevance=unknown,minor,Snowy daytime: distant snow-covered traffic head with low contrast and unreadable color must be unknown
+BDD24,D07,traffic_light needs_review=true,minor,Snow glare and weather obstruction require flagging needs_review for human expert QA
+BDD25,D08,traffic_light state=red relevance=other_lane,critical,Dawn/dusk: left-turn signal is red while straight is green - mislabeling as ego_relevant causes phantom braking
+BDD25,D09,traffic_light state=green relevance=ego_relevant,critical,Dawn/dusk: straight signal head is green for ego lane - planner requires correct green to proceed
+BDD26,D10,traffic_light state=green relevance=ego_relevant,major,Night intersection: near foreground signal is green and directly controls current ego movement
+BDD26,D11,traffic_light state=red relevance=other_lane,critical,Night intersection: distant background signal at next block is red - must NOT label as ego_relevant to prevent false stop

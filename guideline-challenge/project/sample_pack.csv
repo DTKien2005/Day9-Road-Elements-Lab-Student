@@ -1,1 +1,16 @@
 sample_id,split,tags,reason
+BDD02,example,normal,City street daytime - standard traffic light with clear signal head
+BDD04,example,edge;occlusion,City street daytime - traffic light partially occluded by trees
+BDD10,example,normal;conflict,City street intersection with multiple heads for straight and turn lanes
+LISA01,example,normal;temporal,LISA day sequence frame 1 - approach intersection with green light
+BDD11,calibration,normal;conflict,Overcast daytime - intersection with multiple signal heads and arrow
+BDD12,calibration,edge;small_far,Overcast daytime - traffic light at distant intersection
+BDD13,calibration,normal,Clear daytime city street - clearly visible signals
+BDD15,calibration,edge;occlusion,Clear daytime - partially occluded traffic light head
+BDD17,calibration,edge;low_visibility,Rainy city street - wet road reflection and blurred signals
+LISA05,calibration,normal;temporal,LISA sequence approach frame 5 - state transition approach
+BDD14,blind,normal;negative,Highway daytime - negative sample with highway signs but no traffic light
+BDD18,blind,edge;low_visibility,Clear night city street - glare from headlights and streetlamps
+BDD24,blind,edge;ambiguity,Snowy daytime - low contrast signals with snow cover
+BDD25,blind,critical;conflict,Dawn/dusk clear - multiple heads with conflicting turn vs straight signals
+BDD26,blind,critical;small_far,Clear night city street - multiple signal heads at near vs far intersections
