@@ -1,1 +1,3 @@
 time,asker,question,answered_how,guideline_change
+165,peer_duc,Anh BDD18 co dom sang vang tren cot cao co phai traffic light khong?,Chi label khi thay hop den chu nhat. Dom sang tron tren cot cao la den duong -> IGNORE,Bo sung quy tac Visual Structure Evidence vao muc 5.3
+172,peer_duc,Anh BDD26 thay den do o nga tu phia sau cach 150m co danh ego_relevant khong?,Khong. Den nga tu sau bat buoc danh other_lane de tranh phantom braking,Nhan manh quy tac Consecutive Intersections trong muc 5.5

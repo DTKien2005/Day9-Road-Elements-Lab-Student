@@ -1,6 +1,6 @@
 # Annotation guideline — Traffic Light State & Ego Relevance
 
-**Version:** v2
+**Version:** v3
 
 Guideline này là tài liệu kỹ thuật bắt buộc cho toàn bộ annotators và nhóm kiểm định chéo (peer test). Không áp dụng bất kỳ quy tắc nói miệng nào ngoài văn bản này (No hidden rules).
 

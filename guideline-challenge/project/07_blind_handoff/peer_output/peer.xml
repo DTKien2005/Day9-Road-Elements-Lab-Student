@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <meta>
+    <task>
+      <id>202</id>
+      <name>peer-blind-test</name>
+      <size>5</size>
+      <mode>annotation</mode>
+      <overlap>0</overlap>
+      <bugtracker></bugtracker>
+      <created>2026-09-26 10:10:00</created>
+      <updated>2026-09-26 10:10:00</updated>
+      <labels>
+        <label>
+          <name>traffic_light</name>
+          <color>#F9A825</color>
+          <type>rectangle</type>
+          <attributes>
+            <attribute>
+              <name>state</name>
+              <mutable>true</mutable>
+              <input_type>select</input_type>
+              <default_value>__undefined__</default_value>
+              <values>__undefined__&#13;
+red&#13;
+yellow&#13;
+green&#13;
+off&#13;
+unknown</values>
+            </attribute>
+            <attribute>
+              <name>relevance</name>
+              <mutable>false</mutable>
+              <input_type>select</input_type>
+              <default_value>__undefined__</default_value>
+              <values>__undefined__&#13;
+ego_relevant&#13;
+other_lane&#13;
+pedestrian&#13;
+unknown</values>
+            </attribute>
+            <attribute>
+              <name>occluded</name>
+              <mutable>false</mutable>
+              <input_type>checkbox</input_type>
+              <default_value>false</default_value>
+              <values>false</values>
+            </attribute>
+            <attribute>
+              <name>needs_review</name>
+              <mutable>false</mutable>
+              <input_type>checkbox</input_type>
+              <default_value>false</default_value>
+              <values>false</values>
+            </attribute>
+          </attributes>
+        </label>
+        <label>
+          <name>image_escalate</name>
+          <color>#8E24AA</color>
+          <type>tag</type>
+          <attributes></attributes>
+        </label>
+      </labels>
+    </task>
+  </meta>
+  <image id="0" name="BDD14.jpg" width="1280" height="720">
+  </image>
+  <image id="1" name="BDD18.jpg" width="1280" height="720">
+    <box label="traffic_light" occluded="0" source="manual" xtl="580.00" ytl="220.00" xbr="595.00" ybr="255.00" z_order="0">
+      <attribute name="state">red</attribute>
+      <attribute name="relevance">ego_relevant</attribute>
+      <attribute name="occluded">false</attribute>
+      <attribute name="needs_review">false</attribute>
+    </box>
+  </image>
+  <image id="2" name="BDD24.jpg" width="1280" height="720">
+    <box label="traffic_light" occluded="0" source="manual" xtl="640.00" ytl="310.00" xbr="655.00" ybr="335.00" z_order="0">
+      <attribute name="state">unknown</attribute>
+      <attribute name="relevance">unknown</attribute>
+      <attribute name="occluded">false</attribute>
+      <attribute name="needs_review">true</attribute>
+    </box>
+  </image>
+  <image id="3" name="BDD25.jpg" width="1280" height="720">
+    <box label="traffic_light" occluded="0" source="manual" xtl="510.00" ytl="280.00" xbr="525.00" ybr="315.00" z_order="0">
+      <attribute name="state">red</attribute>
+      <attribute name="relevance">other_lane</attribute>
+      <attribute name="occluded">false</attribute>
+      <attribute name="needs_review">false</attribute>
+    </box>
+    <box label="traffic_light" occluded="0" source="manual" xtl="600.00" ytl="275.00" xbr="615.00" ybr="310.00" z_order="0">
+      <attribute name="state">green</attribute>
+      <attribute name="relevance">ego_relevant</attribute>
+      <attribute name="occluded">false</attribute>
+      <attribute name="needs_review">false</attribute>
+    </box>
+  </image>
+  <image id="4" name="BDD26.jpg" width="1280" height="720">
+    <box label="traffic_light" occluded="0" source="manual" xtl="590.00" ytl="240.00" xbr="605.00" ybr="275.00" z_order="0">
+      <attribute name="state">green</attribute>
+      <attribute name="relevance">ego_relevant</attribute>
+      <attribute name="occluded">false</attribute>
+      <attribute name="needs_review">false</attribute>
+    </box>
+    <box label="traffic_light" occluded="0" source="manual" xtl="670.00" ytl="290.00" xbr="680.00" ybr="312.00" z_order="0">
+      <attribute name="state">red</attribute>
+      <attribute name="relevance">other_lane</attribute>
+      <attribute name="occluded">false</attribute>
+      <attribute name="needs_review">false</attribute>
+    </box>
+  </image>
+</annotations>

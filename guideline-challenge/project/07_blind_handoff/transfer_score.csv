@@ -1,0 +1,12 @@
+sample_id,decision_id,expected,severity,kind,peer_evidence,correct,note
+BDD14,D01,IGNORE,major,decision,none,1,Peer ignored negative highway sample correctly
+BDD14,D02,geometry:no_box,minor,geometry,none,1,No bounding boxes drawn on overhead road signs
+BDD18,D03,IGNORE,major,decision,traffic_light [needs_review=false;occluded=false;relevance=ego_relevant;state=red],1,Peer correctly ignored high-pressure sodium street lamps
+BDD18,D04,traffic_light state=red relevance=ego_relevant,critical,decision,traffic_light [needs_review=false;occluded=false;relevance=ego_relevant;state=red],1,Peer correctly labeled night ego traffic light as red and ego_relevant
+BDD18,D05,geometry:tight_head_box,minor,geometry,traffic_light [needs_review=false;occluded=false;relevance=ego_relevant;state=red],1,Box is tight to signal head only without halo glare
+BDD24,D06,traffic_light state=unknown relevance=unknown,minor,decision,traffic_light [needs_review=true;occluded=false;relevance=unknown;state=unknown],1,Correctly identified snowy low visibility and assigned state=unknown relevance=unknown
+BDD24,D07,traffic_light needs_review=true,minor,decision,traffic_light [needs_review=true;occluded=false;relevance=unknown;state=unknown],1,Correctly flagged needs_review for snowy ambiguity
+BDD25,D08,traffic_light state=red relevance=other_lane,critical,decision,traffic_light [needs_review=false;occluded=false;relevance=ego_relevant;state=green] | traffic_light [needs_review=false;occluded=false;relevance=other_lane;state=red],1,Correctly labeled conflicting left turn red as other_lane
+BDD25,D09,traffic_light state=green relevance=ego_relevant,critical,decision,traffic_light [needs_review=false;occluded=false;relevance=ego_relevant;state=green] | traffic_light [needs_review=false;occluded=false;relevance=other_lane;state=red],1,Correctly labeled straight green head as ego_relevant
+BDD26,D10,traffic_light state=green relevance=ego_relevant,major,decision,traffic_light [needs_review=false;occluded=false;relevance=ego_relevant;state=green] | traffic_light [needs_review=false;occluded=false;relevance=other_lane;state=red],1,Near intersection correctly identified as green ego_relevant
+BDD26,D11,traffic_light state=red relevance=other_lane,critical,decision,traffic_light [needs_review=false;occluded=false;relevance=ego_relevant;state=green] | traffic_light [needs_review=false;occluded=false;relevance=other_lane;state=red],1,Far intersection correctly identified as other_lane preventing phantom braking

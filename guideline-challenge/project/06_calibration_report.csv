@@ -1,1 +1,5 @@
 sample_id,item,values_by_annotator,diagnosis,action,rule_change
+BDD11,box_pole,tight_head vs with_pole,guideline_gap,revise_rule,Quy định cấm lấy cột đèn dưới mọi hình thức chỉ bao chặt phần đầu đèn
+BDD12,relevance_far,ego_relevant vs other_lane,guideline_gap,revise_rule,Bổ sung quy tắc phân định ngã tư gần và ngã tư xa (consecutive intersections)
+BDD15,occluded_flag,true vs false,execution_error,coaching,Thống nhất ngưỡng che khuất 50% diện tích và kèm amodal box
+BDD17,glare_state,green vs unknown,data_ambiguity,add_example,Thêm ví dụ ảnh mưa lóa điểm ảnh trên mặt đường để hướng dẫn gán unknown
