@@ -87,7 +87,7 @@ Chào bạn! Nếu bạn mới bắt đầu và chưa từng gán nhãn dữ li�
 ```
 
 ![Quy tắc Một đầu đèn = Một hộp riêng biệt](assets/guideline_images/geom_single_head.png)
-*Hình 3.1: Quy tắc phân tách đầu đèn — Mỗi đầu đèn vật lý độc lập phải có một bounding box riêng, tuyệt đối không gom cụm các đầu đèn lại làm một.*
+*Hình 3.1: Quy tắc phân tách đầu đèn — Mỗi đầu đèn vật lý độc lập phải có một bounding box riêng, tuyệt đối không gom cụm các đầu đèn lại làm một (Ví dụ: 2 đầu đèn trên giàn treo đều đang bật đỏ: box 1 đỏ cho làn khác, box 2 đỏ cho làn xe mình).*
 
 ---
 
@@ -134,14 +134,11 @@ Khi bạn bấm phím `N` và vẽ xong 1 hình chữ nhật quanh hộp đèn, 
 1. **Đèn đường chiếu sáng cao áp:** Mấy bóng đèn tròn màu vàng/cam treo lơ lửng trên cột sắt uốn cong vỉa hè dùng để rọi sáng đường ban đêm. *Không có hộp chữ nhật đèn tín hiệu → BỎ QUA!*
 2. **Đèn hậu ô tô (Tail lights):** Các đốm đỏ ở đuôi xe ô tô, xe buýt chạy phía trước. *Đây là đèn của xe khác, không phải đèn giao thông → BỎ QUA!*
 3. **Vệt phản chiếu trên mặt đường:** Trời mưa đường ướt thấy vệt màu đỏ rực hoặc xanh loang loáng dưới mặt đất hoặc trên kính xe. *Đây là hình ảnh phản chiếu hư ảo → BỎ QUA, chỉ vẽ cái đèn thật trên trời!*
-4. **Cột sắt, biển báo tên đường, khung giàn ngang:** Chỉ vẽ hộp đèn, không vẽ bất kỳ thanh kim loại nào gắn kèm.
+4. **Cột sắt, biển báo tên đường, khung giàn ngang:** Chỉ vẽ hộp đèn, không vẽ bất kỳ thanh kim loại nào gắn kèm. Biển báo chỉ dẫn cao tốc trên giàn treo KHÔNG PHẢI đèn giao thông → GIỮ NGUYÊN 0 BOX!
 5. **Đèn tí hon ở quá xa (< 8 pixel):** Quá nhỏ chỉ bằng 2–3 chấm điểm ảnh li ti không nhìn ra hình thù gì → BỎ QUA.
 
-![Mẫu kiểm tra âm tính: Biển báo chỉ dẫn cao tốc (0 box)](assets/guideline_images/case_bdd14_negative_sample.png)
-*Hình 6.1: Mẫu kiểm tra âm tính (Negative Sample) — Biển báo chỉ dẫn cao tốc trên giàn treo không phải đèn giao thông, giữ nguyên 0 box.*
-
 ![Cảnh tuyết rơi mờ nhòe: Bỏ qua khi không có đèn hợp lệ](assets/guideline_images/case_bdd24_snowy.png)
-*Hình 6.2: Cảnh đường tuyết mờ ảo — Không đoán mò vào các mảng tuyết trắng, giữ nguyên 0 box.*
+*Hình 6.1: Cảnh đường tuyết mờ ảo — Không đoán mò vào các mảng tuyết trắng, giữ nguyên 0 box.*
 
 ---
 
@@ -195,7 +192,7 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
 4. **Bị xe tải che mất trong vài frame:** Nếu có xe tải đi qua che khuất mất cái đèn trong 2–3 frame, đừng đoán mò màu đèn khi hoàn toàn không nhìn thấy ánh sáng; hãy ẩn track hoặc đặt `state=unknown`.
 
 ![Chuỗi video tiếp cận giao lộ và các đầu đèn trên giàn gantry](assets/guideline_images/case_lisa05_gantry.png)
-*Hình 9.1: Chuỗi video tiếp cận giao lộ — Giữ nguyên Track ID xuyên suốt qua các frame tiếp cận ngã tư.*
+*Hình 9.1: Chuỗi video tiếp cận giao lộ (LISA05) — Trên giàn treo cả 2 đầu đèn đều đang bật ĐỎ (đầu bên phải là red ego_relevant, đầu bên trái là red other_lane). Giữ nguyên Track ID xuyên suốt qua các frame tiếp cận ngã tư.*
 
 ---
 
