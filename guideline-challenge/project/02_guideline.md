@@ -41,7 +41,7 @@
 
 ### Nguyên tắc chung:
 - **Prediction không phải Ground Truth**: Mô hình tự động hay nhãn pre-label chỉ để tham khảo. Annotator phải dùng mắt và tư duy ngữ cảnh để xác định đúng thực tế.
-- **Không đoán mò**: Khi điểm ảnh quá mờ nhòe (< 8 px) hoặc lóa chói không phân biệt được màu $\rightarrow$ đặt `state=unknown`, `relevance=unknown` và tick `needs_review=true`.
+- **Không đoán mò**: Khi điểm ảnh quá mờ nhòe (< 8 px) hoặc lóa chói không phân biệt được màu → đặt `state=unknown`, `relevance=unknown` và tick `needs_review=true`.
 - **Zoom tối thiểu 300% - 400%**: Khi vẽ bounding box quanh đầu đèn, bắt buộc phải phóng to để box ôm sát mép vỏ hộp đèn, không lấy cột và không chừa viền thừa.
 
 ---
@@ -66,7 +66,7 @@
 
 - **Đơn vị gán nhãn:** Mỗi **đầu đèn tín hiệu vật lý riêng lẻ (`signal head`)** là một instance độc lập tương ứng với **một Bounding Box (`rectangle`)**.
 - **Quy tắc cụm nhiều đầu đèn (Multi-head cluster / Gantry):**
-  - Trên cùng một giá treo hoặc cùng một cột nếu có nhiều đầu đèn cạnh nhau (ví dụ: 1 đầu đèn đi thẳng, 1 đầu đèn rẽ trái, 1 đầu đèn phụ mũi tên) $\rightarrow$ **VẼ CÁC BOX TÁCH BIỆT** cho từng đầu đèn.
+  - Trên cùng một giá treo hoặc cùng một cột nếu có nhiều đầu đèn cạnh nhau (ví dụ: 1 đầu đèn đi thẳng, 1 đầu đèn rẽ trái, 1 đầu đèn phụ mũi tên) → **VẼ CÁC BOX TÁCH BIỆT** cho từng đầu đèn.
   - Tuyệt đối không vẽ một box to gom toàn bộ cụm đèn hoặc gom nhiều đầu đèn vào một hộp duy nhất.
 
 ---
@@ -115,8 +115,8 @@ Mỗi đối tượng `traffic_light` bắt buộc phải được gán đầy �
 
 ## 7. QUY TẮC TẦM NHÌN & CHE KHUẤT (VISIBILITY & OCCLUSION)
 
-- **Che khuất một phần (Occluded):** Nếu đầu đèn bị che từ 50% đến 80% diện tích bởi cành cây, xe tải phía trước hoặc biển báo $\rightarrow$ Vẽ box ước lượng toàn bộ đầu đèn (amodal box) và tick `occluded=true`.
-- **Che khuất nặng (> 80%):** Nếu chỉ hở một đốm sáng nhỏ li ti không còn nhìn thấy cấu trúc vỏ hộp $\rightarrow$ **IGNORE** (không đủ chứng cứ).
+- **Che khuất một phần (Occluded):** Nếu đầu đèn bị che từ 50% đến 80% diện tích bởi cành cây, xe tải phía trước hoặc biển báo → Vẽ box ước lượng toàn bộ đầu đèn (amodal box) và tick `occluded=true`.
+- **Che khuất nặng (> 80%):** Nếu chỉ hở một đốm sáng nhỏ li ti không còn nhìn thấy cấu trúc vỏ hộp → **IGNORE** (không đủ chứng cứ).
 - **Cắt mép ảnh (Truncation):** Nếu đầu đèn bị cắt ngang mép ảnh nhưng phần còn lại >= 50%, vẽ box ôm phần nhìn thấy và tick `occluded=true`.
 
 ---
@@ -124,14 +124,14 @@ Mỗi đối tượng `traffic_light` bắt buộc phải được gán đầy �
 ## 8. CÂY QUYẾT ĐỊNH XỬ LÝ MƠ HỒ (AMBIGUITY & ESCALATION DECISION TREE)
 
 Khi gặp tình huống phức tạp nhiều luồng giao thông, thực hiện đúng **Quy trình 5 bước**:
-1. **Bước 1:** Đèn có nằm trong tầm nhìn phía trước và nhìn thấy cấu trúc đầu đèn (>= 8 px) không? Nếu không $\rightarrow$ **IGNORE**.
+1. **Bước 1:** Đèn có nằm trong tầm nhìn phía trước và nhìn thấy cấu trúc đầu đèn (>= 8 px) không? Nếu không → **IGNORE**.
 2. **Bước 2:** Đèn gắn ở đâu?
-   - Treo trực tiếp trên giá long môn ngay trên làn xe của mình $\rightarrow$ Hướng tới `ego_relevant`.
-   - Treo trên cột bên trái/phải có kèm biển phụ hoặc mũi tên rẽ $\rightarrow$ Hướng tới `other_lane`.
-   - Có hình người đi bộ / xe đạp $\rightarrow$ Gán `relevance=pedestrian`.
+   - Treo trực tiếp trên giá long môn ngay trên làn xe của mình → Hướng tới `ego_relevant`.
+   - Treo trên cột bên trái/phải có kèm biển phụ hoặc mũi tên rẽ → Hướng tới `other_lane`.
+   - Có hình người đi bộ / xe đạp → Gán `relevance=pedestrian`.
 3. **Bước 3:** Quỹ đạo của xe (ego lane) đang đi thẳng hay rẽ? Đối chiếu hướng đi của làn với tín hiệu đèn.
-4. **Bước 4:** Đèn thuộc ngã tư hiện tại hay ngã tư kế tiếp? Nếu ngã tư kế tiếp $\rightarrow$ `other_lane`.
-5. **Bước 5 (Escalation):** Nếu sau 4 bước vẫn không thể xác định do giao lộ chéo ngã năm hoặc chói lóa $\rightarrow$ Đặt `state=unknown`, `relevance=unknown`, tick `needs_review=true`. Nếu toàn bộ frame bị chói lóa mù sương không thấy đường $\rightarrow$ Gán tag `image_escalate`.
+4. **Bước 4:** Đèn thuộc ngã tư hiện tại hay ngã tư kế tiếp? Nếu ngã tư kế tiếp → `other_lane`.
+5. **Bước 5 (Escalation):** Nếu sau 4 bước vẫn không thể xác định do giao lộ chéo ngã năm hoặc chói lóa → Đặt `state=unknown`, `relevance=unknown`, tick `needs_review=true`. Nếu toàn bộ frame bị chói lóa mù sương không thấy đường → Gán tag `image_escalate`.
 
 ---
 
@@ -139,7 +139,7 @@ Khi gặp tình huống phức tạp nhiều luồng giao thông, thực hiện 
 
 - **Track Mode:** Với chuỗi video liên tiếp (như clip LISA), sử dụng công cụ **Track** để cùng một đầu đèn vật lý duy trì duy nhất một `Track ID` suốt hành trình tiếp cận.
 - **Tính nhất quán của Relevance:** `relevance` của cùng một đầu đèn không được phép thay đổi nhảy cóc qua các frame liên tiếp (ví dụ: không thể frame trước là `ego_relevant`, frame sau lại thành `other_lane`).
-- **Chuyển trạng thái màu (State Transition):** Trạng thái `state` là mutable, phải tuân theo chu trình đèn giao thông thực tế: Green $\rightarrow$ Yellow $\rightarrow$ Red hoặc Red $\rightarrow$ Green. Bước nhảy bất thường (như Green nhảy thẳng sang Red trong 1 frame) là dấu hiệu lỗi cần kiểm tra lại.
+- **Chuyển trạng thái màu (State Transition):** Trạng thái `state` là mutable, phải tuân theo chu trình đèn giao thông thực tế: Green → Yellow → Red hoặc Red → Green. Bước nhảy bất thường (như Green nhảy thẳng sang Red trong 1 frame) là dấu hiệu lỗi cần kiểm tra lại.
 - **Tạm thời bị che (Intermittent Occlusion):** Nếu đèn bị xe tải che mất trong 2–3 frame, không được tự ý "bịa" màu nếu hoàn toàn không nhìn thấy ánh sáng; hãy ẩn track hoặc gán `state=unknown`.
 
 ---
@@ -151,7 +151,7 @@ Khi gặp tình huống phức tạp nhiều luồng giao thông, thực hiện 
 | **Đèn hiện 2-3 tín hiệu (Đầu đèn rời)** | Cột có 1 đầu đèn tròn đỏ và 1 đầu đèn mũi tên xanh rẽ phải | • **Vẽ 2 bounding box riêng biệt**.<br>• Box tròn: `state=red`, `relevance=ego_relevant` (nếu đi thẳng) hoặc `other_lane`.<br>• Box mũi tên: `state=green`, `relevance=other_lane` (nếu đi thẳng) hoặc `ego_relevant` (nếu rẽ). |
 | **Đèn chuyển trạng thái (Red + Yellow)** | Cùng 1 đầu đèn sáng đồng thời 2 bóng Red + Yellow trong 1 giây | • Áp dụng nguyên tắc **Safety First** (xe chưa được đi).<br>• Gán `state=yellow` (nếu có chuẩn chuyển trạng thái), hoặc gán `state=red` và tick `needs_review=true`. |
 | **Đèn không sáng bóng nào (Unlit / Off)** | Ban ngày thấy rõ vỏ hộp nhưng không bóng nào sáng; hoặc ban đêm mất điện | • **BẮT BUỘC vẽ box** ôm sát khung đầu đèn.<br>• Gán `state=off`.<br>• `relevance=ego_relevant` nếu nằm trên làn xe mình, hoặc `other_lane`. Giúp xe biết ngã tư mất điện để giảm tốc độ. |
-| **Đèn ban đêm không thấy vỏ hộp (Invisible Housing - BDD18)** | Ban đêm nền trời đen đặc, chỉ thấy bóng đèn xanh/đỏ phát sáng, không thấy viền hộp đen | • Áp dụng **Visible Lamp Rule (slide mục 69)**.<br>• **Vẽ box ôm chặt lấy vùng bóng đèn phát sáng thực tế** (lõi sáng tròn, kích thước 8x8 đến 10x10 px).<br>• **Không vẽ lan ra quầng sáng chói (glare/halo)** và không đoán mò vỏ hộp đen.<br>• Gán `state=green` (hoặc `red`), `relevance=ego_relevant`. |
+| **Đèn ban đêm không thấy vỏ hộp (Invisible Housing - BDD18)** | Ban đêm nền trời đen đặc, chỉ thấy bóng đèn xanh/đỏ phát sáng, không thấy viền hộp đen | • Áp dụng **Visible Lamp Rule (Quy tắc bóng đèn sáng - Chuẩn DTLD & Slide bài giảng)**.<br>• **Vẽ box ôm chặt lấy vùng bóng đèn phát sáng thực tế** (lõi sáng tròn, kích thước 8x8 đến 10x10 px).<br>• **Không vẽ lan ra quầng sáng chói (glare/halo)** và không đoán mò vỏ hộp đen.<br>• Gán `state=green` (hoặc `red`), `relevance=ego_relevant`. |
 | **Đèn đường chiếu sáng đô thị** | Đốm sáng tròn màu vàng/cam lơ lửng trên cao từ cột kim loại uốn cong | • **IGNORE (Tuyệt đối không vẽ box)**.<br>• Chỉ vẽ khi nhìn thấy cấu trúc hộp đèn tín hiệu chữ nhật có mào che. Đốm sáng cao áp đơn lẻ phải bỏ qua. |
 | **Đèn hậu xe hơi phía trước (Tail lights)** | Đốm sáng màu đỏ ở tầm thấp ngang đuôi xe ô tô | • **IGNORE (Tuyệt đối không vẽ box)**.<br>• Đây là đèn xe, không phải đèn điều khiển giao thông đường bộ. |
 | **Đèn ở xa bị mờ / nhòe chuyển động** | Đèn ở ngã tư xa kích thước 8 px - 15 px, mờ nhòe không rõ màu | • Kích thước < 8 px: **IGNORE**.<br>• Kích thước 8 px đến dưới 15 px: Vẽ box ôm đầu đèn, gán `state=unknown`, `relevance=unknown` (hoặc `ego_relevant` nếu đúng tim đường), tick `needs_review=true`.<br>• Kích thước >= 15 px: Bắt buộc đọc đúng màu. |
@@ -220,8 +220,8 @@ Với vai trò **Lead & Reviewer (ĐỖ TUẤN KIÊN)**, quy trình soát xét j
 ## 14. QUY CHẾ VẬN HÀNH: CLARIFICATION LOG & SỔ QUYẾT ĐỊNH
 
 1. **Ghi nhận thắc mắc:** Khi annotator hoặc nhóm peer gặp tình huống chưa rõ trong blind handoff:
-   - Ghi nhận ngay vào [clarification_log.csv](project/07_blind_handoff/clarification_log.csv) gồm `time`, `asker`, `question`, `answered_how`, `guideline_change`.
+   - Ghi nhận ngay vào [clarification_log.csv](07_blind_handoff/clarification_log.csv) gồm `time`, `asker`, `question`, `answered_how`, `guideline_change`.
    - Tuyệt đối không giải thích bằng miệng ngoài guideline trong blind window.
 2. **Cập nhật quy tắc:**
    - Mọi thắc mắc hợp lý được đưa vào phiên bản guideline tiếp theo.
-   - Ghi chi tiết lý do và bằng chứng vào [08_revision_log.md](project/08_revision_log.md).
+   - Ghi chi tiết lý do và bằng chứng vào [08_revision_log.md](08_revision_log.md).
