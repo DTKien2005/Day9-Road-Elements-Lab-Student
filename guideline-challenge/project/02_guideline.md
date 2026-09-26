@@ -97,6 +97,16 @@ Mỗi đối tượng `traffic_light` bắt buộc phải được gán đầy �
   - **Đèn ở ngã tư sau (Background / Far intersection):** Dù cùng hướng nhìn thẳng nhưng thuộc nút giao tiếp theo → Vẫn vẽ box (nếu >= 8 px), gán `state=red`, nhưng **BẮT BUỘC gán `relevance=other_lane`** (coi như không áp dụng cho hành vi tức thời của xe).
   - *Cảnh báo nguy hiểm*: Nếu gán đèn ngã tư sau là `ego_relevant`, xe tự hành sẽ phanh gấp giữa ngã tư trước (phantom braking), gây tai nạn dồn toa từ xe phía sau!
 
+### 5.6 Đèn ban đêm nhìn từ xa không thấy vỏ hộp đèn (Invisible Housing / Nighttime Visible Lamp)
+- *Hiện tượng (điển hình như ảnh BDD18)*: Ban đêm nền trời tối đen, vỏ hộp đèn (housing) màu đen và mào che visor hoàn toàn chìm vào bóng tối. Mắt người và camera chỉ nhìn thấy một đốm sáng tròn phát quang màu xanh (hoặc đỏ), không thể thấy khung viền hộp đèn ở đâu.
+- *Quy tắc gán nhãn (Visible Lamp Rule theo slide mục 69)*:
+  - Khi vỏ hộp đèn hoàn toàn tàng hình trong bóng tối, **vẽ bounding box ôm chặt lấy vùng bóng đèn phát sáng (visible lamp / core illuminated lens)**.
+  - **Dung sai:** Chỉ lấy phần lõi sáng tròn có màu rõ ràng (thường từ 8 px đến 12 px), **tuyệt đối không vẽ lan rộng ra ngoài quầng sáng chói (glare / halo)** và không cần phải "đoán mò" kích thước hộp đen tàng hình.
+  - **Phân biệt nguồn sáng ban đêm:**
+    - **Đèn giao thông thật:** Đốm sáng màu xanh ngọc (traffic green) treo trên cao giữa làn đường (như ở BDD18: tọa độ x khoảng 585 và 662, y khoảng 307) → Vẽ box, gán `state=green`, `relevance=ego_relevant`.
+    - **Đèn xe phía trước (Tail lights):** Toàn bộ các đốm sáng màu đỏ ở tầm thấp (ngang đuôi ô tô ở BDD18) → **IGNORE** (không vẽ box).
+    - **Đèn chiếu sáng đô thị (Street lamps):** Đốm sáng vàng/cam trên cột cao uốn cong → **IGNORE** (không vẽ box).
+
 ---
 
 ## 6. Visibility & Occlusion
