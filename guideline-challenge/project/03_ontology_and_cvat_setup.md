@@ -31,7 +31,7 @@ Bảng ontology là **source of truth** cho schema CVAT: `03_cvat_labels.json` k
 
 ## Setup test
 
-Thành viên Nguyễn Văn A mở task thử nghiệm:
+Thành viên Đỗ Trung Kiên mở task thử nghiệm:
 - Kiểm tra tạo box chữ nhật quanh đầu đèn bằng phím tắt `N`.
 - Menu dropdown hiện đầy đủ `state`, `relevance` với default `__undefined__`.
 - Thử nghiệm gán checkbox `occluded` và `needs_review` hoạt động trơn tru.

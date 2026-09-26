@@ -1,7 +1,7 @@
 # HƯỚNG DẪN GÁN NHÃN VÀ QUY TRÌNH CVAT — TRAFFIC LIGHT STATE & RELEVANCE
 **Chương trình:** VinUni AI20K — Road Elements Lab (Day 9)  
-**Nhóm:** TrafficVision-AI — **Lead: ĐỖ TUẤN KIÊN**  
-**Version:** v3 (Bản hướng dẫn trực quan — Cầm tay chỉ việc cho người mới bắt đầu)  
+**Nhóm:** TrafficVision-AI — **Lead: ĐỖ TRUNG KIÊN**  
+**Version:** v3 (Bản Đầy Đủ / Full Specification — Xem bản tóm tắt nhanh 1 trang tại: [02_guideline_quickstart.md](02_guideline_quickstart.md))  
 **Phạm vi áp dụng:**
 1. **Calibration Task:** [CVAT Task 26](http://localhost:8080/tasks/26) (Task Thực hành / Hiệu chỉnh nội bộ)
 2. **Golden / Blind Task:** [CVAT Task 27](http://localhost:8080/tasks/27) (Task Thử thách Độc lập / Nghiệm thu)

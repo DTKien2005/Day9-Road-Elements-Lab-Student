@@ -6,7 +6,7 @@ Kế hoạch đảm bảo chất lượng và cổng kiểm soát cho dự án g
 
 Quy trình vận hành: Guideline → Calibration → Production → Self-QC → Review → Rework → Quality Gate.
 
-- **Ai review, review bao nhiêu:** QA Lead (Lê Văn C) review độc lập 100% các mẫu có gắn cờ `needs_review=true`, 100% mẫu ban đêm/thời tiết xấu, và lấy mẫu ngẫu nhiên 20% toàn bộ các ảnh thông thường.
+- **Ai review, review bao nhiêu:** QA Lead (Đỗ Trung Kiên) review độc lập 100% các mẫu có gắn cờ `needs_review=true`, 100% mẫu ban đêm/thời tiết xấu, và lấy mẫu ngẫu nhiên 20% toàn bộ các ảnh thông thường.
 - **Chọn sample theo rule nào:** Phân tầng dựa trên rủi ro (Risk-stratified sampling): Ưu tiên cao nhất cho ảnh có tag `conflict`, `low_visibility`, `small_far`, sau đó đến các ảnh có nhiều hơn 3 đầu đèn.
 - **Issue được ghi ở đâu, đóng thế nào:** Ghi nhận trực tiếp vào Review Log (Google Sheets / CSV) gồm `sample_id`, `box_id`, `severity`, `defect_type`, `annotator`, `suggested_action`. Issue chỉ được đóng khi annotator sửa trực tiếp trên CVAT và QA Lead bấm verify.
 - **Khi phát hiện guideline gap thì update và version ra sao:** Khi có trên 2 annotator bất đồng về cùng 1 quy tắc (hoặc peer reviewer phát hiện case chưa có trong guideline), QA Lead triệu tập họp khẩn 10 phút, cập nhật quy tắc vào `02_guideline.md`, tăng số version (`v1` → `v2` → `v3`) và ghi nhật ký vào `08_revision_log.md`.
