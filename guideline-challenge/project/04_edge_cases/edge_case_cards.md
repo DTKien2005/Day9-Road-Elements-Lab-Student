@@ -36,18 +36,18 @@ Diversity: low_visibility
 CASE ID: EC03
 Sample: BDD26
 Scene: Đường phố ban đêm ánh sáng phức tạp, ngã tư gần và các đầu đèn nhỏ ở ngã tư xa
-Observation: Ở ngã tư gần xe đang tới có 1 đầu đèn đi thẳng màu xanh (`green`) điều khiển xe mình và 1 đầu đèn người đi bộ màu đỏ (`red`) phía dưới. Đồng thời phía xa dọc tuyến đường (vị trí x ≈ 660–716, y ≈ 220–232) có thêm 3 đầu đèn kích thước nhỏ (~6–8 px) gồm 2 đèn đỏ và 1 đèn xanh mờ ảo trong đêm.
+Observation: Ở ngã tư gần xe đang tới có 1 đầu đèn đi thẳng màu xanh (`green`) điều khiển xe mình và 1 đầu đèn người đi bộ màu đỏ (`red`) phía dưới. Đồng thời phía xa dọc tuyến đường (vị trí x ≈ 660–716, y ≈ 220–232) có thêm 3 đầu đèn ở sát ngưỡng 8 px gồm 2 đèn đỏ và 1 đèn xanh mờ ảo trong đêm.
 Decision: LABEL
 Expected: Vẽ đầy đủ 5 bounding box:
 1. Nhóm ngã tư gần (2 box rõ nét):
    - Box 1 (Đèn đi thẳng chính diện): state=green, relevance=ego_relevant, needs_review=false.
    - Box 2 (Đèn người đi bộ): state=red, relevance=pedestrian, needs_review=false.
 2. Nhóm ngã tư xa / dọc đường (3 box nhỏ, mờ ảo trong đêm):
-   - Box 3: state=red, relevance=ego_relevant, needs_review=true.
-   - Box 4: state=red, relevance=ego_relevant, needs_review=true.
+   - Box 3: state=red, relevance=other_lane, needs_review=true.
+   - Box 4: state=red, relevance=other_lane, needs_review=true.
    - Box 5: state=green, relevance=unknown, needs_review=true.
-Rationale: Ghi nhận trọn vẹn cả tín hiệu điều khiển ngã tư gần lẫn các nguồn tín hiệu phát hiện được ở ngã tư xa, đồng thời kích hoạt cờ needs_review=true cho các đèn nhỏ mờ xa để chuyên gia thẩm định.
-Common mistake: Chỉ vẽ 2 đèn to ở gần mà bỏ sót toàn bộ các đầu đèn ở xa, hoặc quên không gắn cờ needs_review=true cho đèn mờ xa.
+Rationale: Ghi nhận trọn vẹn tín hiệu ngã tư gần và các signal head đủ ngưỡng ở ngã tư xa, nhưng bắt buộc tách far intersection khỏi ego lane để tránh phantom braking; các đèn nhỏ mờ xa phải có needs_review=true.
+Common mistake: Gán đèn đỏ ngã tư xa là ego_relevant, bỏ sót đầu đèn xa đủ ngưỡng, hoặc quên needs_review=true.
 Diversity: critical; small_far
 
 ---

@@ -1,10 +1,11 @@
 # HƯỚNG DẪN GÁN NHÃN VÀ QUY TRÌNH CVAT — TRAFFIC LIGHT STATE & RELEVANCE
 **Chương trình:** VinUni AI20K — Road Elements Lab (Day 9)  
 **Nhóm:** TrafficVision-AI — **Lead: ĐỖ TRUNG KIÊN**  
-**Version:** v3 (Bản Đầy Đủ / Full Specification — Xem bản tóm tắt nhanh 1 trang tại: [02_guideline_quickstart.md](02_guideline_quickstart.md))  
+**Version:** v3 (Bản Đầy Đủ / Full Specification — Xem bản tóm tắt nhanh 1 trang tại: [GUIDELINE_QUICKSTART.md](GUIDELINE_QUICKSTART.md))
+
 **Phạm vi áp dụng:**
-1. **Calibration Task:** [CVAT Task 26](http://localhost:8080/tasks/26) (Task Thực hành / Hiệu chỉnh nội bộ)
-2. **Golden / Blind Task:** [CVAT Task 27](http://localhost:8080/tasks/27) (Task Thử thách Độc lập / Nghiệm thu)
+1. **Calibration Task:** `team-traffic-light-calibration` (Task #26 trên CVAT cục bộ của nhóm)
+2. **Golden / Blind Task:** `team-traffic-light-golden-blind` (Task #27 trên CVAT cục bộ của nhóm)
 
 ---
 
@@ -204,7 +205,7 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
 | **2** | **Đèn ban đêm không thấy vỏ hộp đen (Chỉ thấy đốm sáng)** | Ban đêm trời tối thui, chỉ thấy đốm sáng xanh ngọc phát sáng lơ lửng, không thấy viền hộp đen đâu | • Áp dụng **Quy tắc bóng đèn sáng (Visible Lamp Rule)**.<br>• **Vẽ một hình chữ nhật nhỏ ôm chặt lấy cái lõi bóng đèn tròn đang sáng** (kích thước khoảng 8x8 đến 10x10 px).<br>• **Không vẽ lan ra quầng sáng chói lóa xung quanh** và không đoán mò vẽ một cái hộp to đùng.<br>• Chọn `state=green` (hoặc `red`), `relevance=ego_relevant`, tick `occluded=true` (do vỏ hộp bị chìm trong bóng tối ban đêm).<br>• Nếu phát hiện đầu đèn người đi bộ trên vỉa hè (như bóng đỏ người đi bộ), vẽ box riêng và chọn `relevance=pedestrian`, `occluded=false`. |
 | **3** | **Đèn đường chiếu sáng cao áp** | Đốm sáng tròn màu vàng/cam trên cột sắt uốn cong vỉa hè | • **BỎ QUA (IGNORE — Tuyệt đối không vẽ box)**.<br>• Chỉ vẽ khi nhìn thấy cấu trúc hộp đèn tín hiệu giao thông. Đèn đường đơn lẻ phải bỏ qua. |
 | **4** | **Đèn hậu ô tô màu đỏ phía trước** | Mấy đốm sáng đỏ ở tầm thấp ngang đuôi các xe hơi | • **BỎ QUA (IGNORE — Tuyệt đối không vẽ box)**.<br>• Đây là đèn đuôi xe khác, không phải đèn giao thông. |
-| **5** | **Ngã tư ban đêm & Hai ngã tư liên tiếp (Gần vs Xa)** | Ngã tư gần có đèn đi thẳng xanh và đèn người đi bộ đỏ; phía xa dọc tuyến đường có thêm các đầu đèn nhỏ mờ | • **Đèn ngã tư gần:** Box đi thẳng: `state=green`, `relevance=ego_relevant`; Box người đi bộ: `state=red`, `relevance=pedestrian`.<br>• **Các đầu đèn nhỏ ở ngã tư xa:** Vẽ box ôm đầu đèn, chọn màu quan sát được (`red`/`green`), và **BẮT BUỘC tick `needs_review=true`**.<br>• *Lưu ý sống còn:* Không bao giờ để đèn đỏ ngã tư xa làm xe phanh gấp khi ngã tư trước đang xanh! |
+| **5** | **Ngã tư ban đêm & Hai ngã tư liên tiếp (Gần vs Xa)** | Ngã tư gần có đèn đi thẳng xanh và đèn người đi bộ đỏ; phía xa dọc tuyến đường có thêm các đầu đèn nhỏ mờ | • **Đèn ngã tư gần:** Box đi thẳng: `state=green`, `relevance=ego_relevant`; Box người đi bộ: `state=red`, `relevance=pedestrian`.<br>• **Các đầu đèn nhỏ ở ngã tư xa:** Nếu đủ ngưỡng 8 px và nhận ra là signal head, vẽ box ôm đầu đèn, chọn màu quan sát được (`red`/`green`), gán `relevance=other_lane` và **BẮT BUỘC tick `needs_review=true`**. Nếu chưa đủ bằng chứng xác định giao lộ/làn, dùng `state=unknown`, `relevance=unknown`, `needs_review=true`.<br>• *Lưu ý sống còn:* Không bao giờ gán đèn đỏ ngã tư xa là `ego_relevant` khi ngã tư trước đang xanh! |
 | **6** | **Trời mưa mặt đường ướt phản chiếu** | Vệt sáng màu đỏ rực hoặc xanh in loang loáng dưới mặt đường nhựa ướt | • **BỎ QUA vệt phản chiếu dưới đất**.<br>• Chỉ vẽ duy nhất cái hộp đèn thật treo trên cột cao. |
 | **7** | **Đèn bị tắt ngóm (Mất điện / Tắt đèn)** | Ban ngày nhìn rõ cái hộp đèn nhưng cả 3 bóng đều tối om | • **VẪN PHẢI VẼ BOX** ôm khít hộp đèn.<br>• Gán `state=off`.<br>• `relevance=ego_relevant` (nếu nằm trên làn xe mình). Giúp xe tự hành biết ngã tư mất điện để giảm tốc độ. |
 | **8** | **Đèn ở ngã tư xa kích thước nhỏ** | Đèn ở xa có kích thước nhỏ từ 8 px đến 15 px, mờ nhòe | • Kích thước dưới 8 px: **BỎ QUA**.<br>• Từ 8 px đến 15 px: Vẽ box ôm đầu đèn, nếu mờ không chắc màu thì gán `state=unknown`, `relevance=unknown`, tick `needs_review=true`. |
@@ -220,11 +221,8 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
 ![Ban đêm: Visible Lamp Rule và bỏ qua đèn cao áp chiếu sáng](assets/guideline_images/case_bdd18_night_lamps.png)
 *Hình 10.3: Ban đêm — Áp dụng Visible Lamp Rule vẽ box nhỏ ôm quầng sáng xanh (~10x10 px, occluded=true), vẽ đèn người đi bộ đỏ và bỏ qua đèn đường cao áp vàng.*
 
-![Đêm tối ngã tư gần vs ngã tư xa](assets/guideline_images/case_bdd26_night_near_far.png)
-*Hình 10.4: Ban đêm có đèn đi thẳng và đèn người đi bộ — Phân biệt rõ đèn xe đi thẳng (ego_relevant), đèn người đi bộ (pedestrian), và các đèn nhỏ ở xa (needs_review=true).*
-
 ![Đèn ở ngã tư xa kích thước nhỏ](assets/guideline_images/case_bdd12_small_far.png)
-*Hình 10.5: Đèn ở ngã tư xa kích thước nhỏ — Phóng to 300%-400% để vẽ box khít mép đầu đèn, chọn pedestrian hoặc unknown.*
+*Hình 10.4: Đèn ở ngã tư xa kích thước nhỏ — Phóng to 300%-400% để vẽ box khít mép đầu đèn, chọn pedestrian hoặc unknown.*
 
 ---
 
@@ -233,7 +231,7 @@ Khi gán nhãn đoạn clip ngắn có nhiều khung hình chuyển động liê
 Nếu đây là lần đầu tiên bạn ngồi vào máy tính mở CVAT:
 
 1. **Mở Job được giao:**
-   - Nhấp vào link Job (ví dụ [Job #20](http://localhost:8080/tasks/26/jobs/20) hoặc [Job #21](http://localhost:8080/tasks/27/jobs/21)).
+   - Mở Job do nhóm tạo hoặc import trên CVAT của máy đang làm; không dùng URL `localhost` của máy khác.
    - Đăng nhập tài khoản của bạn.
 2. **Lăn chuột phóng to (Zoom):**
    - Đặt con trỏ chuột vào vùng giao lộ có đèn, lăn con lăn chuột về phía trước để phóng to 300% - 400%.
@@ -270,8 +268,8 @@ Trước khi báo cáo với Lead là bạn đã gán nhãn xong, hãy dành đ�
    - Đừng tự ý đoán mò rồi vẽ bừa.
    - Hãy chọn `state=unknown`, `relevance=unknown` và **tick chọn `needs_review=true`**.
 2. **Ghi nhận thắc mắc vào sổ:**
-   - Trong quá trình làm, mọi câu hỏi thắc mắc của bạn hoặc nhóm bạn chéo sẽ được ghi vào file [clarification_log.csv](07_blind_handoff/clarification_log.csv).
-   - Những giải đáp của Lead sẽ được đúc kết và cập nhật vào [08_revision_log.md](08_revision_log.md) để những người làm sau không bao giờ bị vướng mắc nữa!
+   - Trong quá trình làm, mọi câu hỏi thắc mắc của bạn hoặc nhóm bạn chéo sẽ được ghi vào file [clarification_log.csv](guideline-challenge/project/07_blind_handoff/clarification_log.csv).
+   - Những giải đáp của Lead sẽ được đúc kết và cập nhật vào [08_revision_log.md](guideline-challenge/project/08_revision_log.md) để những người làm sau không bao giờ bị vướng mắc nữa!
 
 ---
 *Chúc bạn có một buổi làm việc gán nhãn thật vui, chính xác và hiệu quả cùng nhóm TrafficVision-AI!*

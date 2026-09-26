@@ -17,7 +17,7 @@ Quy trình vận hành: Guideline → Calibration → Production → Self-QC →
 |---|---|---|---|
 | **Critical** | Sai lệch trực tiếp đe dọa an toàn tính mạng: Đảo ngược màu đỏ/xanh cho ego lane, hoặc gán nhầm đèn rẽ thành đèn điều khiển ego lane gây phanh gấp / đâm va. | Gán đèn đỏ rẽ trái thành `relevance=ego_relevant`, nhận nhầm đèn đỏ thành xanh. | Dừng batch, hoàn trả 100% task của annotator để làm lại (re-annotate toàn bộ). |
 | **Major** | Sai lệch hình học hoặc phân loại đáng kể nhưng không dẫn tới va chạm ngay: Bỏ sót đầu đèn >= 15 px, vẽ box bao cả cột đèn, nhầm đèn đường thành đèn giao thông. | Vẽ 1 box ôm cả cột đèn cao 100px; nhầm đèn cao áp thành traffic light. | Trả về cho annotator sửa lại các mẫu lỗi trong vòng 30 phút. |
-| **Minor** | Sai lệch nhỏ trong dung sai cho phép: Box lệch từ 3 - 5 px, quên tick `occluded` khi đèn bị che khoảng 50%. | Box thừa mép 4px, quên tick che khuất. | QA sửa trực tiếp tại chỗ (in-line fix) và nhắc nhở annotator. |
+| **Minor** | Sai lệch nhỏ ngoài dung sai mục tiêu nhưng vẫn có thể sửa nhanh: Box lệch trên 3 px đến 5 px, quên tick `occluded` khi đèn bị che khoảng 50%. | Box thừa mép 4px, quên tick che khuất. | QA sửa trực tiếp tại chỗ (in-line fix) và nhắc nhở annotator. |
 | **Question** | Điểm ảnh quá mờ nhòe hoặc chói lóa không thể khẳng định chắc chắn bằng mắt thường. | Đốm sáng nhỏ 9px ở ngã tư xa trong đêm tuyết. | Escalation lên Safety Engineer để đối chiếu dữ liệu bản đồ số (HD Map) hoặc log xe. |
 
 ## Metrics
@@ -44,6 +44,7 @@ REWORK if:
   - Critical Defect Rate > 0% (dù chỉ 1 lỗi)
   - Hoặc Relevance Accuracy < 95%
   - Hoặc Geometry Mean IoU trong khoảng [0.75, 0.85)
+  - Hoặc còn bất kỳ giá trị `__undefined__` nào
 
 REJECT / ESCALATE if:
   - Toàn bộ batch có trên 3 lỗi Critical

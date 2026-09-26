@@ -22,7 +22,7 @@ Bảng ontology là **source of truth** cho schema CVAT: `03_cvat_labels.json` k
 
 ## CVAT
 
-- **Phiên bản CVAT** (`make cvat-status`): `v2.74.1` (hoặc `v2.76.0`)
+- **Phiên bản CVAT** (`make cvat-status`): `v2.74.1`
 - **Tên task calibration**: `team-traffic-light-calibration` (Task #26), Task Golden/Blind: `team-traffic-light-golden-blind` (Task #27)
 - **Guide của task đã dán `02_guideline.md`?**: Đã dán đầy đủ vào mục Task Description / Guide.
 - **Nhóm dùng Track hay Shape, vì sao:**

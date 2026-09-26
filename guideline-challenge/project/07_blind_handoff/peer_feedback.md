@@ -1,20 +1,40 @@
 # Peer feedback + owner response
 
-- **Nhóm peer:** PeerTeam-02
-- **Người label blind:** Hoàng Minh Đức
+- **Nhóm peer:** dongtinh
+- **Nguồn bài blind:** CVAT Task #28 / Job #22
+- **Nguồn calibration peer:** CVAT Task #29 / Job #23
+- **Export chấm:** `peer_output/dongtinh_blind.zip`
 
-## 1. Peer trả lời
+Không có câu hỏi hay phản hồi văn bản trực tiếp được cung cấp trong lần chấm này. Năm mục dưới đây là **owner audit từ export CVAT thật**, không phải trích dẫn lời peer.
 
-1. Rule nào rõ nhất / giúp quyết định nhanh nhất? Quy tắc cấm lấy cột đèn (tight head only) và quy tắc tách 2 box độc lập cho đầu đèn tròn vs mũi tên rẽ rất dễ hiểu và quyết định nhanh chóng.
-2. Rule nào mơ hồ hoặc phải tự suy diễn? Ban đêm ở ảnh BDD18 có nhiều đốm sáng màu vàng/cam, ban đầu hơi lưỡng lự giữa đèn cao áp chiếu sáng đô thị và đèn giao thông màu vàng.
-3. Sample nào khiến guideline "vỡ"? Không có sample nào làm vỡ guideline; mẫu BDD26 nhiều đầu đèn ở cả ngã tư gần và ngã tư xa đòi hỏi phải đọc kỹ quy tắc consecutive intersections.
-4. Attribute / default nào trong CVAT dễ gây thao tác sai? Giá trị mặc định `__undefined__` rất hiệu quả để bắt lỗi quên chọn, nhưng cần chú ý khi vẽ liên tiếp nhiều box.
-5. Một thay đổi cụ thể giúp annotator mới ít hỏi hơn? Bổ sung thêm ví dụ mô tả đặc điểm nhận diện đèn đường cao áp đơn độc ban đêm để annotator tự tin IGNORE ngay.
+## 1. Năm câu hỏi usability
+
+1. **Rule nào thể hiện rõ nhất?** Peer để BDD14 và BDD24 ở 0 box, phân biệt đúng đèn đường/ảnh âm tính; ở BDD26, hai đèn đỏ giao lộ xa được gán `other_lane`, tránh phantom braking.
+2. **Chỗ nào còn khó?** Thuộc tính `occluded` và `needs_review` chưa nhất quán: hai ego head ban đêm ở BDD18 không được tick `occluded`; các đầu đèn nhỏ xa ở BDD26 không được tick `needs_review`.
+3. **Sample nào làm lộ chỗ thiếu?** BDD26 cho thấy peer bỏ sót đầu đèn xanh nhỏ ở xa và thiếu cờ review. BDD15 trong calibration cũng bị thiếu một đầu đèn `other_lane`.
+4. **Thông tin CVAT nào dễ điền sai?** `state`/`occluded` ở BDD11 và `relevance` ở BDD12 khác owner; đây là các thuộc tính cần ví dụ trực quan hơn.
+5. **Thay đổi nào giúp người mới?** Bổ sung checklist sau mỗi ảnh: quét đủ head nhỏ; far intersection dùng `other_lane`; mọi head 8–15 px hoặc màu/làn chưa chắc phải `needs_review=true`; chỉ tick `occluded` khi đạt ngưỡng 50%.
 
 ## 2. Owner phân loại
 
-| Feedback / decision sai | Nguyên nhân (guideline gap / data ambiguity / execution error) | Xử lý (accept + revise / reject with evidence / add escalation rule) | Bằng chứng |
+| Evidence | Nguyên nhân | Xử lý | Căn cứ |
 |---|---|---|---|
-| Lưỡng lự giữa đốm sáng đèn đường cao áp và đèn vàng ban đêm ở BDD18 | guideline_gap | accept + revise | Bổ sung quy tắc Visual Structure Evidence và ví dụ đèn cao áp vào mục 5.3 trong guideline v3 |
-| Băn khoăn về mức độ rõ ràng của đèn ngã tư kế tiếp ở BDD26 | execution_error | coaching | Hướng dẫn đối chiếu vị trí nút giao và gán relevance=other_lane cho far intersection |
-| Tầm nhìn bị lóa do tuyết trắng ở BDD24 | data_ambiguity | add_escalation | Thêm quy tắc gán state=unknown và tick needs_review=true khi độ tương phản quá thấp |
+| BDD18: 4 box đúng loại nhưng hai ego head có `occluded=false` | execution_error | coaching | Guideline Visible Lamp Rule yêu cầu `occluded=true` khi vỏ hộp chìm trong bóng tối. |
+| BDD25: far green được gán `other_lane` nhưng thiếu `needs_review`; pedestrian là red thay vì unknown so với Task #27 | data_ambiguity | add_escalation | Task #27; đối chiếu CVAT cho thấy state/relevance agreement 75%. |
+| BDD26: 4 box thay vì 5; thiếu far green và các far red không có `needs_review` | execution_error | coaching | Task #27 có 5 box; guideline mục near/far yêu cầu quét đủ head và review head nhỏ xa. |
+| BDD15 calibration: 2 box thay vì 3 | execution_error | coaching | `06_calibration_measure.csv`: count 3 so với 2. |
+| BDD11/BDD12 calibration: khác state/occluded/relevance | guideline_gap | accept + revise | `06_calibration_measure.csv`; thêm ví dụ state off và điều kiện dùng pedestrian/unknown. |
+
+## 3. Sai lệch gold phát hiện sau freeze
+
+Gold và `sample_pack.csv` được giữ nguyên. Các decision sau không khớp Task #27/guideline; peer làm đúng dữ liệu hiện hành nhưng vẫn phải nhận `correct=0` theo frozen gold. Ghi chú trong `transfer_score.csv` bắt đầu bằng `gold sai:`.
+
+| Decision | Sai lệch frozen gold | Bằng chứng peer |
+|---|---|---|
+| BDD18 / D04 | Gold yêu cầu `red + ego_relevant`; Task #27/guideline có hai head `green + ego_relevant`. | Peer gán đúng hai green ego head. |
+| BDD24 / D06–D07 | Gold yêu cầu box unknown + review; Task #27/guideline xác định 0 box. | Peer để 0 box. |
+| BDD25 / D08 | Gold yêu cầu `red + other_lane`; Task #27 không có head này. | Peer có far green `other_lane`, không có red other_lane. |
+
+## 4. Kết luận
+
+Peer nắm tốt inclusion/exclusion và near/far semantics. Lỗi còn lại tập trung ở recall cho head nhỏ và các cờ QA. Các lỗi frozen gold được debrief riêng, không quy thành lỗi guideline hay năng lực peer.

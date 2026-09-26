@@ -1,8 +1,8 @@
 # Team
 
 - **Team:** TrafficVision-AI
-- **Nhóm peer test bài của mình:** PeerTeam-02
-- **Nhóm mình test bài của:** PeerTeam-02
+- **Nhóm peer test bài của mình:** dongtinh
+- **Nhóm mình test bài của:** dongtinh
 - **Problem family:** Traffic light (state, relevance, direction)
 - **Nguồn ảnh:** `bdd100k`, `lisa`
 

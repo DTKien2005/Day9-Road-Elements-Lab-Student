@@ -2,7 +2,7 @@
 **Chương trình:** VinUni AI20K — Road Elements Lab (Day 9)  
 **Nhóm:** TrafficVision-AI — **Lead: ĐỖ TRUNG KIÊN**  
 **Version:** v3 (Bản tóm tắt 1 trang — Dành cho người cần thao tác nhanh / Người lười đọc)  
-*(Bản đầy đủ 13 mục xem tại: [02_guideline.md](02_guideline.md))*
+*(Bản đầy đủ 13 mục xem tại: [GUIDELINE.md](GUIDELINE.md))*
 
 ---
 
@@ -13,18 +13,18 @@
    - ❌ **Tuyệt đối không vẽ cái cột sắt** hay thanh xà ngang giàn treo gantry.
 2. **BƯỚC 2 — CHỌN MÀU ĐÈN (`state`):**
    - Đang sáng màu gì chọn màu đó: Đỏ (`red`), Vàng (`yellow`), Xanh (`green`).
-   - Hộp đèn tắt ngóm không bóng nào sáng (mất điện/tắt) $\rightarrow$ chọn `off`.
-   - Đèn ở quá xa, mờ tịt, lóa sáng không phân biệt được màu $\rightarrow$ chọn `unknown`.
+   - Hộp đèn tắt ngóm không bóng nào sáng (mất điện/tắt) → chọn `off`.
+   - Đèn ở quá xa, mờ tịt, lóa sáng không phân biệt được màu → chọn `unknown`.
 3. **BƯỚC 3 — CHỌN ĐỐI TƯỢNG ÁP DỤNG (`relevance`):**
    - Tưởng tượng bạn đang ngồi ghế lái chiếc xe gắn camera:
-   - Đèn của làn xe mình đi thẳng ở ngã tư trước mặt $\rightarrow$ chọn **`ego_relevant`**.
-   - Đèn rẽ trái/phải cho làn khác, HOẶC đèn ở ngã tư tiếp theo phía sau $\rightarrow$ chọn **`other_lane`**.
-   - Đèn có hình người đi bộ (bàn tay đỏ, người xanh) hoặc xe đạp $\rightarrow$ chọn **`pedestrian`**.
+   - Đèn của làn xe mình đi thẳng ở ngã tư trước mặt → chọn **`ego_relevant`**.
+   - Đèn rẽ trái/phải cho làn khác, HOẶC đèn ở ngã tư tiếp theo phía sau → chọn **`other_lane`**.
+   - Đèn có hình người đi bộ (bàn tay đỏ, người xanh) hoặc xe đạp → chọn **`pedestrian`**.
    - ⚠️ **LƯU Ý:** Bắt buộc bấm chọn lại các ô có chữ `__undefined__`, không được để nguyên!
 
 ---
 
-## 📊 2. BẢNG TRA CỨU NHANH: "THẤY GÌ $\rightarrow$ BẤM GÌ"
+## 📊 2. BẢNG TRA CỨU NHANH: "THẤY GÌ → BẤM GÌ"
 
 | Bạn nhìn thấy tình huống gì trên ảnh? | Thuộc tính bạn bấm chọn trên CVAT |
 | :--- | :--- |
@@ -42,10 +42,10 @@
 ## 🚫 3. NĂM ĐIỀU TUYỆT ĐỐI CẤM (VẼ SAI LÀ BỊ ĐÁNH TRƯỢT)
 
 1. ❌ **CẤM vẽ cả cái cột sắt hoặc thanh gantry:** Chỉ vẽ chiếc hộp đèn, chạm tới thanh sắt là dừng lại.
-2. ❌ **CẤM vẽ đèn đường cao áp chiếu sáng vỉa hè:** Mấy bóng đèn vàng cam đơn lẻ trên cột uốn lượn để rọi sáng đường ban đêm $\rightarrow$ BỎ QUA NGAY.
-3. ❌ **CẤM vẽ đèn hậu ô tô (Tail lights):** Mấy đốm đỏ ở đuôi xe ô tô chạy phía trước $\rightarrow$ BỎ QUA.
-4. ❌ **CẤM vẽ vệt phản chiếu dưới mặt đường:** Trời mưa đường ướt thấy vệt màu đỏ/xanh in loang loáng dưới đất $\rightarrow$ BỎ QUA, chỉ vẽ hộp đèn thật trên cao.
-5. ❌ **CẤM vẽ gom cụm đèn:** Trên 1 cột có 2–3 hộp đèn cạnh nhau $\rightarrow$ BẮT BUỘC vẽ các hình chữ nhật riêng biệt cho từng hộp đèn!
+2. ❌ **CẤM vẽ đèn đường cao áp chiếu sáng vỉa hè:** Mấy bóng đèn vàng cam đơn lẻ trên cột uốn lượn để rọi sáng đường ban đêm → BỎ QUA NGAY.
+3. ❌ **CẤM vẽ đèn hậu ô tô (Tail lights):** Mấy đốm đỏ ở đuôi xe ô tô chạy phía trước → BỎ QUA.
+4. ❌ **CẤM vẽ vệt phản chiếu dưới mặt đường:** Trời mưa đường ướt thấy vệt màu đỏ/xanh in loang loáng dưới đất → BỎ QUA, chỉ vẽ hộp đèn thật trên cao.
+5. ❌ **CẤM vẽ gom cụm đèn:** Trên 1 cột có 2–3 hộp đèn cạnh nhau → BẮT BUỘC vẽ các hình chữ nhật riêng biệt cho từng hộp đèn!
 
 ![Quy chuẩn Bounding Box](assets/guideline_images/geom_tight_box.png)
 *Hình minh họa: Ôm sát vỏ hộp đèn tín hiệu, không vẽ cột sắt.*
